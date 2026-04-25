@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAKTOTUM | Momentum - Gli agenti AI del momento</title>
+  <meta name="description" content="Link GitHub ufficiali, mini articoli e guida pratica per usare OpenClaw, Hermes Agent, Kilo Code, NanoClaw e NemoClaw.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f8f9fa;
+      --text-primary: #1a0b2e;
+      --text-secondary: #4a3a5c;
+      --text-muted: #6b5b7d;
+      --border: #e5e1eb;
+      --accent-lime: #abfa0f;
+      --accent-lime-soft: #f5ffe0;
+      --accent-lime-dark: #8cc408;
+      --accent-purple: #764ba2;
+      --accent-blue: #667eea;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --shadow-sm: 0 4px 12px rgba(26, 11, 46, 0.05);
+      --shadow-md: 0 18px 50px rgba(26, 11, 46, 0.08);
+      --shadow-lg: 0 30px 80px rgba(26, 11, 46, 0.12);
+      --radius: 24px;
+      --radius-sm: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+      background: radial-gradient(circle at top, var(--accent-lime-soft) 0%, var(--bg) 55%);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+    }
+
+    .wrapper {
+      width: min(100%, 1080px);
+      margin: 0 auto;
+    }
+
+    .hero,
+    .toc,
+    .overview,
+    .article,
+    .guide {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .hero {
+      padding: 56px 48px 48px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-lime-soft);
+      color: var(--accent-lime-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: var(--font-heading);
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      line-height: 0.98;
+      margin-bottom: 18px;
+    }
+
+    .lead {
+      color: var(--text-secondary);
+      font-size: 1.14rem;
+      line-height: 1.7;
+      max-width: 70ch;
+      margin-bottom: 24px;
+    }
+
+    .lead em,
+    .text-lime {
+      color: var(--accent-lime-dark);
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .meta strong { color: var(--text-primary); }
+
+    .toc {
+      padding: 28px 32px;
+      background: var(--bg-soft);
+      margin-bottom: 32px;
+    }
+
+    .toc h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .toc ol {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px 24px;
+      counter-reset: toc-counter;
+    }
+
+    .toc li {
+      counter-increment: toc-counter;
+      position: relative;
+      padding-left: 36px;
+    }
+
+    .toc li::before {
+      content: counter(toc-counter, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-lime-dark);
+      font-weight: 600;
+    }
+
+    .toc a,
+    .inline-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .toc a:hover,
+    .inline-link:hover {
+      border-bottom-color: var(--accent-lime-dark);
+    }
+
+    .overview {
+      padding: 40px 36px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-head {
+      margin-bottom: 26px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: 10px;
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      max-width: 72ch;
+    }
+
+    .summary-grid,
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .summary-card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-soft) 100%);
+    }
+
+    .summary-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .summary-card p,
+    .article p,
+    .guide p,
+    .step p,
+    .note {
+      color: var(--text-secondary);
+    }
+
+    .summary-card p {
+      margin-bottom: 14px;
+      font-size: 0.96rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--accent-lime-soft);
+      color: var(--accent-lime-dark);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .article {
+      padding: 48px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+      scroll-margin-top: 24px;
+    }
+
+    .article-number {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-lime-dark);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .article h2 {
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-style: italic;
+      margin-bottom: 26px;
+    }
+
+    .article p {
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .article h3,
+    .guide h3 {
+      font-size: 1.18rem;
+      margin: 28px 0 12px;
+    }
+
+    .article ul,
+    .guide ul {
+      margin: 10px 0 18px 20px;
+      color: var(--text-secondary);
+    }
+
+    .article li,
+    .guide li {
+      margin-bottom: 6px;
+    }
+
+    .info-grid {
+      padding: 20px;
+      margin: 24px 0;
+      background: var(--bg-soft);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--accent-lime);
+    }
+
+    .info-cell .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .info-cell .value {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: var(--text-primary);
+      color: #ffffff;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      font-weight: 500;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .guide {
+      padding: 56px 48px;
+      background: linear-gradient(145deg, #ffffff 0%, var(--accent-lime-soft) 100%);
+      box-shadow: var(--shadow-md);
+      margin-top: 40px;
+      scroll-margin-top: 24px;
+    }
+
+    .guide > p.lead {
+      margin-bottom: 34px;
+    }
+
+    .step {
+      position: relative;
+      margin-bottom: 18px;
+      padding: 24px 28px 24px 82px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .step-num {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent-lime);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    code,
+    pre {
+      font-family: var(--font-mono);
+    }
+
+    code.inline {
+      padding: 2px 7px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-soft);
+      color: var(--accent-purple);
+      font-size: 0.9em;
+    }
+
+    pre {
+      margin: 12px 0 4px;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--text-primary);
+      color: #f5ffe0;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      overflow-x: auto;
+    }
+
+    .note {
+      margin-top: 26px;
+      padding: 20px 24px;
+      border: 1px dashed var(--accent-purple);
+      border-radius: var(--radius-sm);
+      background: rgba(118, 75, 162, 0.05);
+      font-size: 0.94rem;
+    }
+
+    .note strong { color: var(--accent-purple); }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 34px;
+      padding: 14px 22px;
+      border-radius: 12px;
+      background: var(--accent-lime);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.15s ease;
+    }
+
+    .back:hover { transform: translateX(-4px); }
+
+    @media (max-width: 760px) {
+      body { padding: 24px 16px 60px; }
+      .hero,
+      .article,
+      .guide { padding: 32px 24px; }
+      .toc,
+      .overview { padding: 24px; }
+      .step { padding: 20px 20px 20px 68px; }
+      .step-num {
+        top: 18px;
+        left: 18px;
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="hero">
+      <span class="tag">FAKTOTUM · MOMENTUM</span>
+      <h1>Gli agenti AI del <em class="text-lime">momento</em></h1>
+      <p class="lead">Una pagina editoriale pensata per raccogliere i progetti piu interessanti da monitorare: <strong>OpenClaw</strong>, <strong>Hermes Agent</strong>, <strong>Kilo Code</strong>, <strong>NanoClaw</strong> e <strong>NemoClaw</strong>. Qui trovi i <strong>link GitHub ufficiali</strong>, una panoramica sintetica in italiano e una guida concreta per capire da dove iniziare.</p>
+      <div class="meta">
+        <span><strong>Aggiornato:</strong> aprile 2026</span>
+        <span><strong>Contenuto:</strong> articoli brevi + guida pratica</span>
+        <span><strong>Fonti:</strong> repository e documentazione ufficiale</span>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <h2>Indice</h2>
+      <ol>
+        <li><a href="#link-ufficiali">Link GitHub ufficiali</a></li>
+        <li><a href="#openclaw">OpenClaw</a></li>
+        <li><a href="#hermes">Hermes Agent</a></li>
+        <li><a href="#kilocode">Kilo Code</a></li>
+        <li><a href="#nanoclaw">NanoClaw</a></li>
+        <li><a href="#nemoclaw">NemoClaw</a></li>
+        <li><a href="#guida">Guida pratica per iniziare</a></li>
+      </ol>
+    </nav>
+
+    <section class="overview" id="link-ufficiali">
+      <div class="section-head">
+        <span class="tag">RIFERIMENTI</span>
+        <h2>Link GitHub ufficiali verificati</h2>
+        <p>Questi sono i repository principali e ufficiali dei cinque progetti citati in pagina, con un link diretto alla rispettiva documentazione o sito ufficiale quando disponibile.</p>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span class="pill">Assistente personale</span>
+          <h3>OpenClaw</h3>
+          <p>Assistente multi-canale per messaggistica, voce, canvas e automazioni personali.</p>
+          <a class="btn" href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">GitHub ufficiale</a>
+          <div class="button-row" style="margin-top:14px; padding-top:14px; border-top:none;">
+            <a class="btn btn-secondary" href="https://openclaw.ai" target="_blank" rel="noopener">Sito ufficiale</a>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <span class="pill">Memoria persistente</span>
+          <h3>Hermes Agent</h3>
+          <p>Agente di Nous Research con memoria, skill auto-generate e gateway multi-piattaforma.</p>
+          <a class="btn" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">GitHub ufficiale</a>
+          <div class="button-row" style="margin-top:14px; padding-top:14px; border-top:none;">
+            <a class="btn btn-secondary" href="https://hermes-agent.nousresearch.com/docs" target="_blank" rel="noopener">Documentazione</a>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <span class="pill">Coding agent</span>
+          <h3>Kilo Code</h3>
+          <p>Piattaforma open source per sviluppatori, disponibile in VS Code, JetBrains e CLI.</p>
+          <a class="btn" href="https://github.com/Kilo-Org/kilocode" target="_blank" rel="noopener">GitHub ufficiale</a>
+          <div class="button-row" style="margin-top:14px; padding-top:14px; border-top:none;">
+            <a class="btn btn-secondary" href="https://kilo.ai/docs/" target="_blank" rel="noopener">Documentazione</a>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <span class="pill">Alternativa leggera</span>
+          <h3>NanoClaw</h3>
+          <p>Alternativa minimale e sicura a OpenClaw, con agenti isolati in container.</p>
+          <a class="btn" href="https://github.com/qwibitai/nanoclaw" target="_blank" rel="noopener">GitHub ufficiale</a>
+          <div class="button-row" style="margin-top:14px; padding-top:14px; border-top:none;">
+            <a class="btn btn-secondary" href="https://nanoclaw.dev/" target="_blank" rel="noopener">Sito ufficiale</a>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <span class="pill">Sicurezza enterprise</span>
+          <h3>NemoClaw</h3>
+          <p>Reference stack NVIDIA per eseguire OpenClaw in OpenShell con un livello di sicurezza piu alto.</p>
+          <a class="btn" href="https://github.com/NVIDIA/NemoClaw" target="_blank" rel="noopener">GitHub ufficiale</a>
+          <div class="button-row" style="margin-top:14px; padding-top:14px; border-top:none;">
+            <a class="btn btn-secondary" href="https://docs.nvidia.com/nemoclaw/latest/" target="_blank" rel="noopener">Documentazione</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="article" id="openclaw">
+      <span class="article-number">01 / AGENTE PERSONALE</span>
+      <h2>OpenClaw</h2>
+      <p class="subtitle">L'assistente personale che vive nei canali che usi gia ogni giorno</p>
+
+      <p><strong>OpenClaw</strong> e un assistente AI personale open source progettato per girare sui tuoi dispositivi e risponderti dove lavori davvero: WhatsApp, Telegram, Slack, Discord, Signal, Google Chat, iMessage e molti altri canali. L'idea di fondo e semplice ma potente: invece di aprire ogni volta una nuova interfaccia, porti l'agente direttamente nei flussi di comunicazione che usi gia.</p>
+
+      <p>Dal repository ufficiale emerge chiaramente che OpenClaw punta su un setup guidato e molto pratico. Il comando consigliato e <code class="inline">openclaw onboard --install-daemon</code>, che accompagna nella configurazione del gateway, delle skill, dei canali e dell'ambiente di lavoro. E una soluzione particolarmente interessante per chi vuole un <strong>assistente sempre attivo</strong>, locale o semi-locale, capace di leggere messaggi, orchestrare task, usare tool e mantenere continuita operativa.</p>
+
+      <h3>Quando ha senso usarlo</h3>
+      <ul>
+        <li>Vuoi un assistente personale disponibile da smartphone e desktop, senza cambiare abitudini.</li>
+        <li>Hai bisogno di un agente multi-canale, non limitato a una sola chat o a un solo IDE.</li>
+        <li>Ti interessa una base molto estendibile con tool, skill, sessioni e routing tra agenti.</li>
+      </ul>
+
+      <h3>Guida rapida d'uso</h3>
+      <p>Il percorso piu semplice e installare il pacchetto globale, lanciare l'onboarding ufficiale e poi configurare almeno un canale. Il README raccomanda Node.js 24 oppure Node 22.16+, e segnala come percorso preferito macOS, Linux o Windows tramite WSL2.</p>
+
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="label">GitHub ufficiale</div>
+          <div class="value">github.com/openclaw/openclaw</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Runtime</div>
+          <div class="value">Node 24 o Node 22.16+</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Setup consigliato</div>
+          <div class="value">openclaw onboard --install-daemon</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Piattaforme</div>
+          <div class="value">macOS · Linux · Windows via WSL2</div>
+        </div>
+      </div>
+
+      <pre>npm install -g openclaw@latest
+openclaw onboard --install-daemon
+
+# controllo stato / diagnostica
+openclaw doctor</pre>
+
+      <p><strong>Nota operativa:</strong> la documentazione ufficiale ricorda che nella sessione principale molti tool girano direttamente sull'host. Prima di esporre OpenClaw a canali remoti o workflow sensibili, conviene leggere bene la parte sicurezza e sandboxing del progetto.</p>
+
+      <div class="button-row">
+        <a class="btn" href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">GitHub ufficiale</a>
+        <a class="btn btn-secondary" href="https://openclaw.ai" target="_blank" rel="noopener">Sito ufficiale</a>
+      </div>
+    </article>
+
+    <article class="article" id="hermes">
+      <span class="article-number">02 / AGENTE CHE IMPARA</span>
+      <h2>Hermes Agent</h2>
+      <p class="subtitle">L'agente con memoria persistente, skill auto-generate e continuita tra le sessioni</p>
+
+      <p><strong>Hermes Agent</strong>, sviluppato da <strong>Nous Research</strong>, si presenta come un agente che non si limita a rispondere ma <strong>accumula contesto nel tempo</strong>. La documentazione ufficiale insiste su un punto chiave: Hermes crea skill dall'esperienza, migliora quelle esistenti durante l'uso, conserva memoria strutturata e sa recuperare conversazioni passate per lavorare con maggiore continuita.</p>
+
+      <p>Dal punto di vista pratico e un progetto molto versatile: puoi usarlo da terminale con <code class="inline">hermes</code>, ma anche collegarlo a Telegram, Discord, Slack, WhatsApp e Signal tramite il gateway. Per chi arriva da OpenClaw c'e anche un vantaggio concreto: esiste il comando ufficiale <code class="inline">hermes claw migrate</code>, pensato per importare configurazioni, skill e parte del contesto utente.</p>
+
+      <h3>Perche e interessante</h3>
+      <ul>
+        <li>E adatto a chi vuole un agente che mantenga memoria e migliori nel tempo.</li>
+        <li>Funziona sia su macchina locale sia su VPS o infrastruttura remota leggera.</li>
+        <li>Offre una CLI ricca, piu un gateway multi-piattaforma per conversare da chat.</li>
+      </ul>
+
+      <h3>Guida rapida d'uso</h3>
+      <p>Il progetto fornisce un installer ufficiale e dopo l'installazione il flusso piu pulito e: aprire Hermes, scegliere il modello con <code class="inline">hermes model</code>, eseguire <code class="inline">hermes setup</code> e solo dopo attivare il gateway se vuoi usarlo da Telegram o altre piattaforme. Windows nativo non e supportato: il percorso raccomandato e WSL2.</p>
+
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="label">GitHub ufficiale</div>
+          <div class="value">github.com/NousResearch/hermes-agent</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Runtime</div>
+          <div class="value">Python 3.11+</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Installazione</div>
+          <div class="value">scripts/install.sh ufficiale</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Uso principale</div>
+          <div class="value">CLI + gateway messaging</div>
+        </div>
+      </div>
+
+      <pre>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+source ~/.bashrc
+
+hermes
+hermes model
+hermes setup
+hermes gateway</pre>
+
+      <p>Se il tuo obiettivo e costruire un agente piu personale, piu persistente e meno "usa e getta", Hermes e probabilmente il progetto piu interessante di questo gruppo.</p>
+
+      <div class="button-row">
+        <a class="btn" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">GitHub ufficiale</a>
+        <a class="btn btn-secondary" href="https://hermes-agent.nousresearch.com/docs" target="_blank" rel="noopener">Documentazione</a>
+      </div>
+    </article>
+
+    <article class="article" id="kilocode">
+      <span class="article-number">03 / CODING AGENT</span>
+      <h2>Kilo Code</h2>
+      <p class="subtitle">L'agente open source per sviluppare meglio, dentro l'IDE o da terminale</p>
+
+      <p><strong>Kilo Code</strong> e il progetto da tenere d'occhio se il tuo mondo principale e il codice. A differenza degli altri agenti di questa pagina, qui il centro non e la messaggistica ma l'ambiente di sviluppo: <strong>VS Code</strong>, <strong>JetBrains</strong> e <strong>CLI</strong>. Il repository ufficiale lo descrive come una piattaforma "all-in-one" per agentic engineering, capace di generare codice, eseguire task da terminale, fare refactoring, automatizzare il browser e controllare il proprio lavoro.</p>
+
+      <p>La documentazione ufficiale mette in evidenza un approccio a modalita: Architect per pianificare, Coder per implementare, Debugger per analizzare errori, Ask per l'esplorazione del progetto. In pratica Kilo Code e molto vicino a un collega tecnico sempre disponibile, con il vantaggio di poter lavorare sia in chat sia in automazione.</p>
+
+      <h3>Quando sceglierlo</h3>
+      <ul>
+        <li>Vuoi un agente focalizzato sullo sviluppo software, non sulla messaggistica personale.</li>
+        <li>Lavori soprattutto in VS Code, JetBrains o terminale.</li>
+        <li>Hai bisogno di alternare pianificazione, scrittura codice e debugging con ruoli diversi.</li>
+      </ul>
+
+      <h3>Guida rapida d'uso</h3>
+      <p>Puoi installarlo come estensione di VS Code oppure come CLI globale. Per iniziare in modo rapido, il percorso piu diretto e installare la CLI con npm e lanciare <code class="inline">kilo</code> dentro un progetto. La documentazione segnala anche la modalita <code class="inline">kilo run --auto</code> per workflow senza prompt di conferma: molto utile in ambienti controllati, da usare con cautela altrove.</p>
+
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="label">GitHub ufficiale</div>
+          <div class="value">github.com/Kilo-Org/kilocode</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Piattaforme</div>
+          <div class="value">VS Code · JetBrains · CLI</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Installazione CLI</div>
+          <div class="value">npm install -g @kilocode/cli</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Entry point</div>
+          <div class="value">kilo</div>
+        </div>
+      </div>
+
+      <pre># CLI
+npm install -g @kilocode/cli
+kilo
+
+# VS Code
+code --install-extension kilocode.kilo-code</pre>
+
+      <p>Per chi costruisce prodotti, script, automazioni o nuove feature quotidianamente, Kilo Code e la scelta piu naturale tra i cinque agenti presenti qui.</p>
+
+      <div class="button-row">
+        <a class="btn" href="https://github.com/Kilo-Org/kilocode" target="_blank" rel="noopener">GitHub ufficiale</a>
+        <a class="btn btn-secondary" href="https://kilo.ai/docs/" target="_blank" rel="noopener">Documentazione</a>
+      </div>
+    </article>
+
+    <article class="article" id="nanoclaw">
+      <span class="article-number">04 / ALTERNATIVA LEGGERA</span>
+      <h2>NanoClaw</h2>
+      <p class="subtitle">Una base piu piccola, piu leggibile e piu isolata per chi vuole controllo reale</p>
+
+      <p><strong>NanoClaw</strong> nasce come alternativa leggera a OpenClaw. Il messaggio del repository ufficiale e molto chiaro: meno complessita, piu comprensibilita del codice, piu sicurezza attraverso <strong>container isolati</strong>. Gli agenti non girano semplicemente nello stesso processo dell'host, ma in ambienti separati, con accesso limitato ai mount che decidi tu.</p>
+
+      <p>La filosofia del progetto e volutamente diversa da quella dei framework "generalisti": NanoClaw vuole essere piccolo, modificabile e personalizzabile anche da chi usa Claude Code per adattarlo. Canali e provider non sono tutti caricati di default: si aggiungono come skill con comandi del tipo <code class="inline">/add-telegram</code>, <code class="inline">/add-opencode</code> o <code class="inline">/add-ollama-provider</code>.</p>
+
+      <h3>Per chi e ideale</h3>
+      <ul>
+        <li>Vuoi un assistente personale nello stile di OpenClaw, ma con una base piu piccola e comprensibile.</li>
+        <li>Dai molta importanza all'isolamento dei processi e alla separazione delle credenziali.</li>
+        <li>Sei disposto a personalizzare il sistema con un approccio piu "bespoke".</li>
+      </ul>
+
+      <h3>Guida rapida d'uso</h3>
+      <p>Il quick start ufficiale e semplice: clone del repository, ingresso nella directory e lancio di <code class="inline">nanoclaw.sh</code>. Lo script accompagna nella preparazione dell'ambiente, installa cio che manca e guida nella creazione del primo agente e nel pairing del primo canale.</p>
+
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="label">GitHub ufficiale</div>
+          <div class="value">github.com/qwibitai/nanoclaw</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Requisiti</div>
+          <div class="value">Node 20+ · pnpm 10+ · Docker</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Installazione</div>
+          <div class="value">bash nanoclaw.sh</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Sicurezza</div>
+          <div class="value">Container + Agent Vault</div>
+        </div>
+      </div>
+
+      <pre>git clone https://github.com/qwibitai/nanoclaw.git nanoclaw-v2
+cd nanoclaw-v2
+bash nanoclaw.sh</pre>
+
+      <p>Se cerchi un agente personale piu prudente, piu minimale e piu facile da auditare, NanoClaw e uno dei candidati piu interessanti oggi disponibili.</p>
+
+      <div class="button-row">
+        <a class="btn" href="https://github.com/qwibitai/nanoclaw" target="_blank" rel="noopener">GitHub ufficiale</a>
+        <a class="btn btn-secondary" href="https://nanoclaw.dev/" target="_blank" rel="noopener">Sito ufficiale</a>
+      </div>
+    </article>
+
+    <article class="article" id="nemoclaw">
+      <span class="article-number">05 / SICUREZZA E SANDBOX</span>
+      <h2>NemoClaw</h2>
+      <p class="subtitle">Lo stack NVIDIA per eseguire OpenClaw in OpenShell con piu controllo e protezione</p>
+
+      <p><strong>NemoClaw</strong> non e un agente concorrente di OpenClaw: e un <strong>reference stack</strong> costruito da NVIDIA per far girare OpenClaw in un ambiente piu sicuro. Il cuore del progetto e <strong>OpenShell</strong>, runtime del NVIDIA Agent Toolkit pensato per eseguire agenti autonomi con isolamento, policy di rete e lifecycle management piu rigorosi.</p>
+
+      <p>La documentazione ufficiale lo presenta come soluzione per chi ha bisogno di un onboarding guidato, gestione del sandbox, controllo delle connessioni in uscita e possibilita di usare inferenza gestita o locale. E una proposta molto interessante per ambienti sensibili, ma c'e una precisazione importante: <strong>NemoClaw e ancora software alpha</strong>, quindi non va trattato come prodotto production-ready.</p>
+
+      <h3>Quando valutarlo seriamente</h3>
+      <ul>
+        <li>Vuoi OpenClaw ma in un contesto con requisiti di sicurezza piu severi.</li>
+        <li>Hai un'infrastruttura Linux, Docker e idealmente hardware NVIDIA o esigenze di inference gestita.</li>
+        <li>Ti serve un sandbox chiaro, con policy e lifecycle controllabili.</li>
+      </ul>
+
+      <h3>Guida rapida d'uso</h3>
+      <p>Il percorso ufficiale parte da uno script di installazione, poi prosegue con l'onboarding del sandbox. Terminata la procedura, puoi collegarti all'ambiente creato e usare OpenClaw al suo interno via TUI o CLI. La documentazione segnala come prerequisiti Node 22.16+, npm 10+, Docker in esecuzione e risorse macchina adeguate.</p>
+
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="label">GitHub ufficiale</div>
+          <div class="value">github.com/NVIDIA/NemoClaw</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Stato</div>
+          <div class="value">Alpha / early preview</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Requisiti base</div>
+          <div class="value">Node 22.16+ · npm 10+ · Docker</div>
+        </div>
+        <div class="info-cell">
+          <div class="label">Uso</div>
+          <div class="value">Sandbox OpenClaw in OpenShell</div>
+        </div>
+      </div>
+
+      <pre>curl -fsSL https://www.nvidia.com/nemoclaw.sh | bash
+
+# dopo l'onboarding
+nemoclaw my-assistant connect
+
+# dentro il sandbox
+openclaw tui</pre>
+
+      <p>Per team tecnici, ambienti compliance e casi in cui l'agente non deve avere liberta totale sull'host, NemoClaw e oggi uno dei progetti piu rilevanti da osservare.</p>
+
+      <div class="button-row">
+        <a class="btn" href="https://github.com/NVIDIA/NemoClaw" target="_blank" rel="noopener">GitHub ufficiale</a>
+        <a class="btn btn-secondary" href="https://docs.nvidia.com/nemoclaw/latest/" target="_blank" rel="noopener">Documentazione</a>
+      </div>
+    </article>
+
+    <section class="guide" id="guida">
+      <span class="tag">GUIDA PRATICA</span>
+      <h2>Come scegliere e usare questi agenti senza perdere tempo</h2>
+      <p class="lead">La differenza vera non e tra "agente bello" e "agente brutto", ma tra <em>agente giusto per il tuo caso d'uso</em> e progetto sbagliato installato per curiosita. Questa sequenza ti aiuta a partire in modo pulito.</p>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Parti dal caso d'uso, non dal trend</h3>
+        <p><strong>Assistente personale multi-canale:</strong> scegli OpenClaw.</p>
+        <p><strong>Assistente che ricorda, migliora e accumula memoria:</strong> scegli Hermes Agent.</p>
+        <p><strong>Agente per coding, refactoring e debugging:</strong> scegli Kilo Code.</p>
+        <p><strong>Alternativa piu piccola e piu isolata a OpenClaw:</strong> scegli NanoClaw.</p>
+        <p><strong>OpenClaw in sandbox con focus su sicurezza:</strong> scegli NemoClaw.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Prepara l'ambiente corretto</h3>
+        <ul>
+          <li><strong>OpenClaw:</strong> Node 24 o 22.16+, terminale e un canale da collegare.</li>
+          <li><strong>Hermes Agent:</strong> Python 3.11+, Linux/macOS/WSL2.</li>
+          <li><strong>Kilo Code:</strong> npm per la CLI oppure VS Code / JetBrains per l'estensione.</li>
+          <li><strong>NanoClaw:</strong> Docker funzionante, Node 20+, pnpm 10+.</li>
+          <li><strong>NemoClaw:</strong> Docker, Node 22.16+, risorse macchina adeguate e scenario adatto a un sandbox.</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Usa sempre il comando ufficiale di installazione</h3>
+        <p>Evita fork casuali e snippet copiati da forum. Parti sempre dal repository o dalla documentazione ufficiale:</p>
+        <pre># OpenClaw
+npm install -g openclaw@latest
+openclaw onboard --install-daemon
+
+# Hermes Agent
+curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+
+# Kilo Code
+npm install -g @kilocode/cli
+kilo
+
+# NanoClaw
+git clone https://github.com/qwibitai/nanoclaw.git nanoclaw-v2
+cd nanoclaw-v2
+bash nanoclaw.sh
+
+# NemoClaw
+curl -fsSL https://www.nvidia.com/nemoclaw.sh | bash</pre>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Configura modello, provider e credenziali con criterio</h3>
+        <p>Quasi nessuno di questi agenti e realmente "zero config". Dopo l'installazione dovrai scegliere almeno il provider LLM, le API key o il backend locale.</p>
+        <ul>
+          <li><strong>Hermes:</strong> usa <code class="inline">hermes model</code> e poi <code class="inline">hermes setup</code>.</li>
+          <li><strong>OpenClaw:</strong> l'onboarding ufficiale ti porta nella configurazione iniziale del gateway e del modello.</li>
+          <li><strong>Kilo Code:</strong> puoi usare la CLI o l'estensione e collegare il provider dal flusso iniziale.</li>
+          <li><strong>NanoClaw:</strong> il setup integra provider e canali tramite skill e onboarding.</li>
+          <li><strong>NemoClaw:</strong> l'onboard definisce sandbox, inference e policy iniziali.</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <h3>Collega solo una superficie per volta</h3>
+        <p>Il modo migliore per non complicarti la vita e partire con un solo punto di accesso:</p>
+        <ul>
+          <li>Telegram o CLI per OpenClaw, Hermes e NanoClaw.</li>
+          <li>VS Code o CLI per Kilo Code.</li>
+          <li>Sandbox locale + TUI per NemoClaw.</li>
+        </ul>
+        <p>Dopo che il primo flusso funziona bene, aggiungi altri canali, altre skill o piu automazioni.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <h3>Tratta gli agenti come software con privilegi, non come semplici chatbot</h3>
+        <ul>
+          <li>Mantieni aggiornati i progetti e usa i comandi di diagnostica ufficiali.</li>
+          <li>Non dare subito accesso a directory, email o canali sensibili.</li>
+          <li>Su OpenClaw leggi bene la sezione sicurezza e sandboxing.</li>
+          <li>Su Kilo Code usa <code class="inline">--auto</code> solo in ambienti fidati.</li>
+          <li>Su NanoClaw e NemoClaw sfrutta davvero l'isolamento, invece di aggirarlo.</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <strong>Consiglio finale:</strong> se devi sceglierne uno solo per partire, non guardare solo la popolarita. Guarda il contesto. <strong>OpenClaw</strong> e il piu naturale per un assistente personale multi-canale, <strong>Hermes</strong> e il piu interessante se vuoi memoria e apprendimento continuo, <strong>Kilo Code</strong> e la scelta piu diretta per sviluppo software, <strong>NanoClaw</strong> e ideale se vuoi una base piu piccola e isolata, <strong>NemoClaw</strong> e da osservare se la sicurezza del runtime e la priorita principale.</div>
+
+      <a href="faktotum.html" class="back">&larr; Torna alla home</a>
+    </section>
+  </div>
+</body>
+</html>
