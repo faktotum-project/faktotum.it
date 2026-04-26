@@ -1,0 +1,260 @@
+Thinking: I'm starting in read-only mode to analyze what the FAKTOTUM frontend needs from a backend perspective, so I'll examine the HTML structure to identify which interactions require server support.
+Prima di proporre un piano, analizzo il frontend per capire quali endpoint/servizi servono realmente.
+✱ Grep "form|fetch|POST|api|endpoint|action=|submit" in faktotum.html (79 matches)
+→ Read faktotum.html [offset=1051, limit=120]
+→ Read faktotum.html [offset=1300, limit=80]
+Thinking: I'm mapping out the full backend requirements now. The frontend has a static HTML setup with a contact form that collects sensitive user data—name, email, profile details, tech stack, pain points—but it's currently just simulating submission with a timeout instead of actually sending the data anywhere.
+I need to figure out the hosting approach (serverless platforms like Vercel or Netlify versus a traditional VPS setup versus a backend-as-a-service option), confirm whether they already own the faktotum.it domain, decide on an email provider for transactional messages, and set up data storage for GDPR compliance and business records. I also need to add spam protection, create a proper privacy policy page since they're collecting personal data under EU/Italian law, and potentially add a cookie banner if analytics get involved.
+Ho analizzato il frontend. Ecco cosa serve effettivamente e la strategia per portarlo online.
+---
+Stato attuale del frontend
+Sito: single-page statica (faktotum.html + momentum.html) + 3 SVG + font Google.
+Unica interazione lato server: il form di contatto in #contact (faktotum.html:1061-1113), attualmente mockato con setTimeout (faktotum.html:1341-1347). Il commento nel codice dice già // await fetch('/api/contact', { method: 'POST', body: formData });.
+Dati raccolti dal form (tutti personali, rilevanti GDPR):
+- name, email, profile (privato/business) — obbligatori
+- operativo, stack, painpoints, supporto, llm — testuali liberi
+- privacy — checkbox consenso
+Riferimenti hardcoded da risolvere:
+- https://faktotum.it in og:url / og:image (meta SEO) → serve il dominio
+- mailto:admin@faktotum.it (faktotum.html:1057) → serve casella mail sul dominio
+- <a href="#">privacy policy</a> (faktotum.html:1106) → pagina reale obbligatoria (GDPR, trattamento dati)
+---
+Componenti backend da progettare
+#	Componente
+1	Hosting statico (HTML/SVG)
+2	Dominio + DNS + TLS
+3	API /api/contact
+4	Invio email (notifica admin + conferma utente)
+5	Persistenza submissions
+6	Anti-spam (hCaptcha/Turnstile + honeypot + rate-limit)
+7	Email sul dominio (admin@faktotum.it)
+8	Pagina privacy policy + cookie banner
+9	Analytics (Plausible/Umami)
+10	Monitoring/uptime
+---
+## Strade possibili (con tradeoff)
+### A) **Serverless "tutto-in-uno"** — *raccomandato per time-to-market*
+Stack: **Cloudflare Pages** (hosting statico + CDN + TLS automatico) + **Cloudflare Workers** (funzione `/api/contact`) + **Cloudflare Turnstile** (anti-bot gratuito) + **Resend** o **Postmark** (SMTP transazionale) + **Cloudflare D1** o **Supabase** (DB submissions).
+- **Pro:** zero gestione server, free tier ampio (Cloudflare è praticamente gratuito per questo traffico), deploy automatico da GitHub push, TLS automatico, DDoS protection, edge CDN globale.
+- **Contro:** vendor lock-in moderato (Workers API); Resend ha sede USA (valutare data residency GDPR, ma adeguata).
+- **Costo stimato:** 0–5 €/mese fino a migliaia di richieste/mese.
+### B) **VPS tradizionale** — *controllo massimo*
+Stack: **Hetzner CX11** (Finlandia/Germania, 4 €/mese) + **nginx** + **Node.js/Fastify** o **Python/FastAPI** + **PostgreSQL** locale + **Postfix** o SMTP esterno + **Certbot** per TLS.
+- **Pro:** controllo completo, dati in UE, nessun lock-in, stack portabile.
+- **Contro:** devi gestire tu updates OS, backup, hardening SSH/firewall, rinnovi TLS, monitoraggio. Per un form è sovra-dimensionato.
+- **Costo:** ~5 €/mese fisso + tempo ops.
+### C) **Ibrido Netlify/Vercel + Supabase** — *DX moderno*
+**Netlify** (hosting + Functions + form built-in che salva in dashboard + webhook) o **Vercel** + **Supabase** (Postgres gestito in UE).
+- **Pro:** Netlify Forms gestisce submission/spam/email notification out-of-the-box (zero codice backend per il form base). Supabase offre DB + auth se un domani serve area riservata.
+- **Contro:** Netlify free tier ha 100 submissions/mese (poi a pagamento). Vercel Functions hanno cold start.
+- **Costo:** 0 € fino ai limiti, poi 19 $/mese (Netlify Pro).
+### D) **Form-as-a-service puro** — *MVP in 1 ora*
+**Cloudflare Pages** (statico) + **Formspree** / **Web3Forms** / **Basin** come endpoint form.
+- **Pro:** set up in 10 minuti, niente da scrivere lato backend.
+- **Contro:** dati su servizio terzo (GDPR DPA da firmare), personalizzazione limitata, no CRM integrato.
+- **Costo:** 0–10 €/mese.
+---
+Raccomandazione
+Data la natura del sito (landing di acquisizione lead, traffico inizialmente basso, dati personali GDPR, dominio .it) suggerisco:
+Stack consigliato (Opzione A evoluta):
+1. Hosting: Cloudflare Pages con deploy automatico dal repo faktotum-project/faktotum-landing
+2. API: Cloudflare Worker /api/contact (TypeScript, 50 righe)
+3. DB: Cloudflare D1 (SQLite gestito, EU region) — schema submissions(id, created_at, name, email, profile, operativo, stack, painpoints, supporto, llm, ip_hash, user_agent)
+4. Email: Resend (miglior DX, 3000 email/mese gratis) con template admin-notification + user-confirmation
+5. Anti-bot: Cloudflare Turnstile (gratis, no CAPTCHA visibile)
+6. Dominio: registra faktotum.it via registrar italiano (es. Register.it, Netsons ~12 €/anno) oppure Cloudflare Registrar se disponibile per .it
+7. Email dominio: admin@faktotum.it via Zoho Mail (gratis 5 caselle, server UE) o Google Workspace (6 €/mese)
+8. Privacy policy: pagina privacy.html generata con Iubenda (30 €/anno, conforme GDPR IT) o template custom
+---
+Informazioni che mi servono prima di finalizzare
+# Questions
+Hai già il dominio faktotum.it registrato?
+Sì, è già mio
+Quale approccio preferisci?
+Cloudflare Pages + Workers + Resend (Recommended)
+Se serve scrivere codice backend, quale stack preferisci?
+TypeScript/Node (Recommended)
+Come vuoi gestire admin@faktotum.it?
+Casella del registrar (Aruba/Register)
+Dove vuoi archiviare le submission del form?
+Database (Cloudflare D1 o Supabase) (Recommended)
+Come generi la privacy policy obbligatoria GDPR?
+Decidiamo dopo
+Vuoi deploy automatici da GitHub?
+Sì, push su main = deploy (Recommended)
+Thinking: I need to pin down two key details before moving forward: which registrar is managing faktotum.it, since that determines whether I'm delegating nameservers to Cloudflare or keeping DNS at the current registrar, and also confirming the data residency preference is Cloudflare.
+For the D1 database, I'm noting that it doesn't support direct region selection since it's globally distributed, but I could suggest Supabase EU-Central as an alternative if GDPR compliance is a hard requirement. Rather than getting bogged down in these details now, I'll present the full implementation plan with reasonable defaults and flag these tradeoffs so we can address them inline.
+Prima di redigere il piano definitivo, due clarification che impattano la procedura operativa:
+# Questions
+Su quale registrar è registrato faktotum.it?
+Register.it
+Per DNS e TLS del dominio preferisci:
+Delegare i nameserver a Cloudflare (Recommended)
+Cloudflare D1 ha distribuzione primary-region ma replica globale. Per GDPR preferisci:
+Valuta dopo
+Perfetto, ora ho tutto. Ecco il piano definitivo.
+---
+Piano di go-live FAKTOTUM
+Stack scelto
+Layer	Servizio
+Dominio	Register.it (già attivo)
+DNS + TLS + CDN + WAF	Cloudflare
+Hosting statico	Cloudflare Pages
+API form	Cloudflare Worker (TypeScript)
+Anti-bot	Cloudflare Turnstile
+Invio email	Resend (3000/mese gratis)
+Email @faktotum.it	Register.it Mail Base
+Storage lead	MVP: solo email → fase 2 DB
+CI/CD	GitHub → Cloudflare Pages
+Privacy policy	Placeholder provvisorio
+---
+## Fase 1 — Infrastruttura dominio & DNS (senza codice)
+1. **Account Cloudflare** — creo account gratuito (email dedicata, consigliata `admin@faktotum.it` una volta attiva, altrimenti personale).
+2. **Aggiungere `faktotum.it` su Cloudflare**
+   - Piano Free
+   - Cloudflare esegue scansione record DNS esistenti (da Register.it) e li importa
+   - Cloudflare fornisce 2 nameserver (es. `xxx.ns.cloudflare.com`)
+3. **Register.it → cambio nameserver**
+   - Login pannello Register.it → Dominio → Nameserver → inserire i 2 NS Cloudflare
+   - Propagazione: 15 min – 24 h
+4. **Verifica attivazione** — status "Active" in dashboard Cloudflare
+5. **Record DNS da configurare su Cloudflare:**
+   - `A` / `AAAA` / `CNAME` per `faktotum.it` e `www.faktotum.it` → creati automaticamente da Cloudflare Pages (step 2)
+   - `MX` → mantieni i record mail di Register.it (copiati automaticamente) per `admin@faktotum.it`
+   - `TXT SPF`, `DKIM`, `DMARC` → aggiunti in Fase 3 per deliverability Resend
+6. **TLS** — Cloudflare emette automaticamente certificato universale "Full (strict)"
+---
+Fase 2 — Hosting + CI/CD
+1. Cloudflare Pages: connessione a GitHub
+   - Dashboard Pages → "Create project" → "Connect to Git"
+   - Autorizzare l'app Cloudflare sull'org faktotum-project
+   - Selezionare repo faktotum-landing, branch production main
+2. Build settings
+   - Framework preset: None (è HTML puro)
+   - Build command: (vuoto)
+   - Output directory: /
+   - Root directory: /
+3. File di ingresso — Cloudflare Pages cerca index.html di default. Due opzioni:
+   - Rinominare faktotum.html → index.html (consigliato)
+   - Oppure aggiungere _redirects con / /faktotum.html 200
+4. Custom domain
+   - Pages → Custom domains → aggiungi faktotum.it e www.faktotum.it
+   - Cloudflare crea record CNAME flattenati automaticamente
+5. Deploy preview — ogni PR genera URL *.pages.dev per staging
+6. Primo deploy produzione — push su main dopo rename file
+---
+Fase 3 — Email transazionale (Resend)
+1. Account Resend — signup gratuito (3000 email/mese, 100/giorno)
+2. Aggiungere dominio faktotum.it su Resend
+   - Resend fornisce 3 record DNS:
+     - TXT SPF include _spf.resend.com
+     - TXT DKIM (due selector CNAME)
+     - TXT DMARC policy v=DMARC1; p=none; rua=mailto:admin@faktotum.it
+3. Aggiungere record su Cloudflare DNS → verifica entro 5 min
+4. Creare API key Resend → salvata come secret in Cloudflare Worker
+5. Mittente: FAKTOTUM <noreply@faktotum.it> per transazionali, replyto admin@faktotum.it
+---
+Fase 4 — Cloudflare Turnstile (anti-bot)
+1. Dashboard Cloudflare → Turnstile → "Add site"
+2. Dominio: faktotum.it, mode: Managed (invisibile/challenge adattivo)
+3. Ottengo:
+   - Site key (pubblica, in HTML)
+   - Secret key (server, in Worker)
+4. Modifica faktotum.html:
+   - <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> in <head>
+   - <div class="cf-turnstile" data-sitekey="SITE_KEY"></div> dentro <form id="contactForm"> prima del bottone submit
+---
+Fase 5 — Backend: Cloudflare Worker /api/contact
+Struttura repo dopo integrazione
+faktotum-landing/
+├── index.html              (rinominato da faktotum.html)
+├── momentum.html
+├── headerlogo.svg
+├── herologo.svg
+├── herologodinamico.svg
+├── privacy.html            (placeholder GDPR)
+├── functions/
+│   └── api/
+│       └── contact.ts      (Cloudflare Pages Function)
+├── package.json
+├── wrangler.toml
+└── .gitignore
+> Scelta architetturale: uso Pages Functions (non Worker standalone) perché è integrato nello stesso progetto Pages → un solo deploy, routing /api/* automatico, niente CORS.
+Responsabilità di functions/api/contact.ts
+1. Metodo: accetta solo POST, rifiuta altri con 405
+2. Parse application/x-www-form-urlencoded o multipart/form-data
+3. Validation server-side:
+   - name 2–100 char
+   - email regex RFC
+   - profile ∈ ['privato', 'business']
+   - privacy === 'on'
+   - Campi testo opzionali: clamp lunghezza (coerente con maxlength HTML)
+4. Verifica Turnstile:
+   - POST a https://challenges.cloudflare.com/turnstile/v0/siteverify con secret + token dal form
+   - Se fail → 403
+5. Honeypot — campo nascosto <input name="website" style="display:none"> che se compilato = bot → 204 silenzioso
+6. Rate limit:
+   - Cloudflare Worker + KV per contatore IP → max 3 richieste/10 min per IP
+   - Oppure delegato a Cloudflare WAF Rate Limiting rule
+7. Invio email via Resend:
+   - Email #1 → admin@faktotum.it con tutti i campi formattati (HTML + testo)
+   - Email #2 → email utente con conferma ricezione (template cordiale, link privacy)
+8. Risposta: JSON { success: true } su 200, { error: "..." } su 4xx/5xx
+9. Logging: console.log strutturato → visibile in Cloudflare dashboard
+10. Segreti (wrangler secret / Pages env vars):
+    - RESEND_API_KEY
+    - TURNSTILE_SECRET_KEY
+    - ADMIN_EMAIL=admin@faktotum.it
+Modifiche al JS inline in index.html
+Sostituire il blocco mock (righe 1341-1347) con fetch reale:
+const formData = new FormData(e.target);
+const res = await fetch('/api/contact', { method: 'POST', body: formData });
+if (!res.ok) throw new Error((await res.json()).error || 'Errore server');
+Aggiungere gestione turnstile-callback per abilitare il submit solo dopo challenge passato.
+---
+Fase 6 — Privacy & compliance minima per go-live
+Anche se la soluzione definitiva è rinviata, non si può pubblicare un form GDPR-sensibile senza privacy policy. Placeholder da includere nel primo deploy:
+1. privacy.html — pagina minima con:
+   - Titolare del trattamento (ragione sociale o nome+CF se persona fisica)
+   - Finalità (risposta a richiesta di contatto/analisi)
+   - Base giuridica (art. 6.1.b GDPR – misure precontrattuali)
+   - Destinatari (Cloudflare, Resend, Register.it)
+   - Tempi conservazione (es. 24 mesi)
+   - Diritti interessato (art. 15–22)
+   - Contatto DPO / titolare
+2. Link in index.html riga 1106: sostituire href="#" con href="/privacy.html"
+3. Cookie banner: non necessario se non aggiungiamo analytics/tracking. Il sito attuale usa solo font Google (che carica da fonts.googleapis.com — attenzione: sentenza italiana 2022 ha rilevato Google Fonts come potenziale trasferimento dati extra-UE se caricato da CDN). Opzione: self-hostare i font (2 file WOFF2) → zero tracking, zero banner richiesto.
+> Raccomandazione pre-go-live: self-hosting font + nessun analytics = nessun banner obbligatorio. Rimanderemo Iubenda/alternativa alla fase 2 quando aggiungeremo Plausible/cookies.
+---
+## Fase 7 — Checklist di verifica pre-pubblicazione
+- [ ] `curl -I https://faktotum.it` → 200, header HSTS, cf-cache
+- [ ] `dig faktotum.it NS` → nameserver Cloudflare
+- [ ] `dig faktotum.it TXT | grep spf` → Resend SPF presente
+- [ ] Form test con dati reali → arrivano entrambe le email
+- [ ] Form test con Turnstile bloccato → errore 403 atteso
+- [ ] Honeypot test (curl con campo `website=bot`) → silenzioso, nessuna email
+- [ ] Rate limit test (script 5 POST rapide) → dopo 3 risponde 429
+- [ ] Link `mailto:admin@faktotum.it` → apre client mail
+- [ ] `privacy.html` raggiungibile e linkato dal checkbox
+- [ ] Lighthouse mobile ≥ 90
+- [ ] Console browser senza errori
+- [ ] Preview responsive 320px / 768px / 1440px
+---
+Timeline stimata
+Fase
+1. Dominio + Cloudflare DNS
+2. Hosting Pages + CI/CD
+3. Resend + DNS
+4. Turnstile
+5. Worker /api/contact
+6. Privacy minima + self-host font
+7. Checklist + go-live
+Totale: ~5 ore di lavoro effettivo distribuite su 1–2 giornate (la propagazione DNS è il collo di bottiglia cronologico).
+---
+Punti aperti / da decidere in implementazione
+1. Rename faktotum.html → index.html? Raccomandato (più standard, meno config). Impatta tutti i commit successivi ma il repo ha un solo commit iniziale, nessun problema.
+2. Self-host font Google: da fare ora per evitare banner cookie, o accettare di inserirli dopo?
+3. Struttura testo email admin: preferenza formato (markdown tabellare, HTML ricco con logo, plain text)?
+4. Fase 2 (dopo go-live): aggiungere storage lead (D1/Supabase) + analytics Plausible/Umami + privacy policy Iubenda.
+---
+Confermi il piano? Se sì, procediamo uscendo dal plan mode e partendo dalla Fase 1 (Cloudflare DNS) — oppure da un punto a tua scelta. Dimmi anche se vuoi che mi occupi io di creare i placeholder (privacy.html, rename, Worker skeleton) prima ancora che tu tocchi Cloudflare/Register.
