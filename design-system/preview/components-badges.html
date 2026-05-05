@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F8F9FA; font-family: 'Inter', sans-serif; padding: 24px 20px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
+  .lime    { background: #F5FFE0; color: #5A8A00; border: 1px solid rgba(140,196,8,0.3); }
+  .blue    { background: rgba(102,126,234,0.1); color: #4A5FBF; border: 1px solid rgba(102,126,234,0.25); }
+  .purple  { background: rgba(118,75,162,0.1); color: #764BA2; border: 1px solid rgba(118,75,162,0.25); }
+  .neutral { background: #F8F9FA; color: #6B5A7D; border: 1px solid #E5E1EB; }
+  .error   { background: rgba(229,62,62,0.08); color: #C53030; border: 1px solid rgba(229,62,62,0.2); }
+  .dot     { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .tag     { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 500; background: #F0EBF5; color: #4A3A5C; border: 1px solid #E5E1EB; }
+</style>
+</head>
+<body>
+<div class="row">
+  <span class="badge lime"><span class="dot"></span>Active</span>
+  <span class="badge blue">Running</span>
+  <span class="badge purple">Beta</span>
+  <span class="badge neutral">Idle</span>
+  <span class="badge error">Error</span>
+  <span class="tag">automation</span>
+  <span class="tag">AI agent</span>
+  <span class="tag">workflow</span>
+</div>
+</body>
+</html>

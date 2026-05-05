@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #fff; font-family: 'Inter', sans-serif; padding: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(10,1fr); gap: 10px; align-items: flex-end; }
+  .token { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .bar { background: linear-gradient(180deg,#667EEA,#764BA2); border-radius: 3px 3px 0 0; width: 100%; }
+  .val { font-size: 9px; color: #6B5A7D; text-align: center; font-family: monospace; }
+  .name { font-size: 9px; color: #6B5A7D; text-align: center; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="token"><div class="bar" style="height:4px"></div><div class="val">4</div><div class="name">1</div></div>
+  <div class="token"><div class="bar" style="height:8px"></div><div class="val">8</div><div class="name">2</div></div>
+  <div class="token"><div class="bar" style="height:12px"></div><div class="val">12</div><div class="name">3</div></div>
+  <div class="token"><div class="bar" style="height:16px"></div><div class="val">16</div><div class="name">4</div></div>
+  <div class="token"><div class="bar" style="height:24px"></div><div class="val">24</div><div class="name">5</div></div>
+  <div class="token"><div class="bar" style="height:32px"></div><div class="val">32</div><div class="name">6</div></div>
+  <div class="token"><div class="bar" style="height:48px"></div><div class="val">48</div><div class="name">7</div></div>
+  <div class="token"><div class="bar" style="height:64px"></div><div class="val">64</div><div class="name">8</div></div>
+  <div class="token"><div class="bar" style="height:80px"></div><div class="val">96</div><div class="name">9</div></div>
+  <div class="token"><div class="bar" style="height:96px"></div><div class="val">128</div><div class="name">10</div></div>
+</div>
+</body>
+</html>

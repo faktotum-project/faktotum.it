@@ -1,0 +1,207 @@
+/* ============================================================
+   FAKTOTUM Design System - Colors & Typography
+   Product light theme with optional dark surface tokens.
+   Updated May 2026.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ------------------------------------------------------------
+   COLOR TOKENS
+   ------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --bg:                 #FFFFFF;
+  --bg-soft:            #F8F9FA;
+  --bg-purple-tint:     #F5F0FB;
+
+  /* Text */
+  --text-primary:       #1A0B2E;
+  --text-secondary:     #4A3A5C;
+  --text-light:         #6B5A7D;
+
+  /* Borders */
+  --border:             #E5E1EB;
+  --border-light:       #F0EBF5;
+
+  /* Accent — Lime (primary action) */
+  --accent-lime:        #ABFA0F;
+  --accent-lime-soft:   #F5FFE0;
+  --accent-lime-glow:   rgba(171, 250, 15, 0.30);
+  --accent-lime-dark:   #8CC408;
+  --accent-lime-text:   #4D7600;
+
+  /* Accent — Blue & Purple (gradients) */
+  --accent-blue:        #667EEA;
+  --accent-blue-text:   #4A5FBF;
+  --accent-purple:      #764BA2;
+
+  /* Gradients */
+  --gradient-brand:     linear-gradient(135deg, #667EEA, #764BA2);
+  --gradient-lime-bg:   linear-gradient(135deg, #F5FFE0, #E8F5C9);
+  --gradient-hero:      linear-gradient(135deg, #667EEA, #764BA2);
+
+  /* Semantic */
+  --color-success:      #ABFA0F;
+  --color-error:        #E53E3E;
+  --color-warning:      #D97706;
+  --color-info:         #667EEA;
+  --focus-ring:         0 0 0 3px rgba(171, 250, 15, 0.24);
+
+  /* --------------------------------------------------------
+     SPACING
+     -------------------------------------------------------- */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   24px;
+  --space-6:   32px;
+  --space-7:   48px;
+  --space-8:   64px;
+  --space-9:   96px;
+  --space-10:  128px;
+
+  /* --------------------------------------------------------
+     BORDER RADIUS
+     -------------------------------------------------------- */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-full: 9999px;
+
+  /* --------------------------------------------------------
+     SHADOWS
+     -------------------------------------------------------- */
+  --shadow-sm:          0 1px 3px rgba(26,11,46,0.08), 0 1px 2px rgba(26,11,46,0.04);
+  --shadow-card:        0 4px 16px rgba(26,11,46,0.08), 0 0 0 1px var(--border);
+  --shadow-modal:       0 24px 64px rgba(26,11,46,0.18), 0 0 0 1px var(--border);
+  --shadow-glow-lime:   0 0 20px rgba(171, 250, 15, 0.40);
+  --shadow-btn-lime:    0 4px 14px rgba(140, 196, 8, 0.30);
+
+  /* --------------------------------------------------------
+     TRANSITIONS
+     -------------------------------------------------------- */
+  --transition-fast:    150ms ease-out;
+  --transition-base:    200ms ease-out;
+  --transition-slow:    300ms ease-out;
+
+  /* --------------------------------------------------------
+     TYPOGRAPHY
+     -------------------------------------------------------- */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.8125rem;
+  --text-base: 1rem;
+  --text-md:   1.125rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  2rem;
+  --text-3xl:  2.5rem;
+  --text-4xl:  3.25rem;
+  --text-5xl:  4rem;
+  --text-6xl:  5rem;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg:                 #0D0618;
+  --bg-soft:            #1A0B2E;
+  --bg-purple-tint:     #231242;
+  --text-primary:       #F0EAFA;
+  --text-secondary:     rgba(240, 234, 250, 0.72);
+  --text-light:         rgba(240, 234, 250, 0.56);
+  --border:             rgba(255, 255, 255, 0.10);
+  --border-light:       rgba(255, 255, 255, 0.06);
+  --accent-blue-text:   #A8B6FF;
+  --accent-lime-text:   #D4F86A;
+  --shadow-card:        0 0 0 1px var(--border), 0 4px 24px rgba(0,0,0,0.40);
+  --shadow-modal:       0 24px 64px rgba(0,0,0,0.50), 0 0 0 1px var(--border);
+}
+
+/* ------------------------------------------------------------
+   SEMANTIC ELEMENTS
+   ------------------------------------------------------------ */
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font-family: var(--font-display); font-size: var(--text-5xl);  font-weight: 700; line-height: 1.1;  letter-spacing: 0; color: var(--text-primary); }
+h2 { font-family: var(--font-display); font-size: var(--text-4xl);  font-weight: 700; line-height: 1.15; letter-spacing: 0; color: var(--text-primary); }
+h3 { font-family: var(--font-display); font-size: var(--text-3xl);  font-weight: 600; line-height: 1.2;  letter-spacing: 0; color: var(--text-primary); }
+h4 { font-family: var(--font-display); font-size: var(--text-xl);   font-weight: 700; line-height: 1.3;  letter-spacing: 0; color: var(--text-primary); }
+
+p { font-family: var(--font-body); font-size: var(--text-base); line-height: 1.65; color: var(--text-secondary); }
+
+a { color: var(--accent-blue-text); text-decoration: none; transition: color var(--transition-fast); }
+a:hover { color: var(--accent-purple); }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  background: var(--bg-soft);
+  color: var(--accent-purple);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px 7px;
+}
+
+/* Utility */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent-lime);
+  color: var(--text-primary);
+  border: none; border-radius: var(--radius-full);
+  padding: 10px 24px;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn-lime);
+  transition: all var(--transition-fast);
+}
+.btn-primary:hover { background: var(--accent-lime-dark); }
+.btn-primary:active { transform: scale(0.98); }

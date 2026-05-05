@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F8F9FA; font-family: 'Inter', sans-serif; padding: 20px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .swatch { flex: 1; min-width: 80px; border-radius: 10px; overflow: hidden; border: 1px solid #E5E1EB; }
+  .swatch-color { height: 70px; }
+  .swatch-info { padding: 8px 10px; background: #fff; }
+  .swatch-name { font-size: 11px; font-weight: 500; color: #1A0B2E; }
+  .swatch-hex  { font-size: 10px; color: #6B5A7D; margin-top: 2px; font-family: monospace; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="swatch">
+    <div class="swatch-color" style="background:#FFFFFF;border-bottom:1px solid #E5E1EB"></div>
+    <div class="swatch-info"><div class="swatch-name">BG</div><div class="swatch-hex">#FFFFFF</div></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-color" style="background:#F8F9FA"></div>
+    <div class="swatch-info"><div class="swatch-name">BG Soft</div><div class="swatch-hex">#F8F9FA</div></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-color" style="background:#1A0B2E"></div>
+    <div class="swatch-info"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#1A0B2E</div></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-color" style="background:#4A3A5C"></div>
+    <div class="swatch-info"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#4A3A5C</div></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-color" style="background:#6B5A7D"></div>
+    <div class="swatch-info"><div class="swatch-name">Text Light</div><div class="swatch-hex">#6B5A7D</div></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-color" style="background:#E5E1EB"></div>
+    <div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-hex">#E5E1EB</div></div>
+  </div>
+</div>
+</body>
+</html>

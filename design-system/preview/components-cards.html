@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F8F9FA; font-family: 'Inter', sans-serif; padding: 20px; }
+  .row { display: flex; gap: 14px; }
+  .card { background: #fff; border: 1px solid #E5E1EB; border-radius: 14px; padding: 20px; flex: 1; box-shadow: 0 4px 16px rgba(26,11,46,0.06); }
+  .card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6B5A7D; margin-bottom: 6px; }
+  .card-value { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #1A0B2E; }
+  .card-sub   { font-size: 12px; color: #5A8A00; margin-top: 4px; }
+  .card-brand { background: linear-gradient(135deg,rgba(102,126,234,0.06),rgba(118,75,162,0.06)); border-color: rgba(118,75,162,0.15); }
+  .card-brand .card-value { background: linear-gradient(135deg,#667EEA,#764BA2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="card">
+    <div class="card-label">Active Agents</div>
+    <div class="card-value">24</div>
+    <div class="card-sub">↑ 3 this week</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Tasks Automated</div>
+    <div class="card-value">1,847</div>
+    <div class="card-sub">↑ 12% this month</div>
+  </div>
+  <div class="card card-brand">
+    <div class="card-label">Time Saved</div>
+    <div class="card-value">138h</div>
+    <div class="card-sub" style="color:#667EEA">this month</div>
+  </div>
+</div>
+</body>
+</html>

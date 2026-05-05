@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>faktotumOS | Il sistema operativo degli agenti FAKTOTUM</title>
+  <meta name="description" content="faktotumOS — il servizio SaaS proprietario per orchestrare i tuoi agenti AI. Presto disponibile.">
+  <link rel="icon" type="image/svg+xml" href="design-system/assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="design-system/colors_and_type.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f8f9fa;
+      --text-primary: #1a0b2e;
+      --text-secondary: #4a3a5c;
+      --text-muted: #6b5b7d;
+      --border: #e5e1eb;
+      --accent-lime: #abfa0f;
+      --accent-lime-soft: #f5ffe0;
+      --accent-lime-dark: #8cc408;
+      --accent-purple: #764ba2;
+      --accent-blue: #667eea;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --shadow-md: 0 18px 50px rgba(26, 11, 46, 0.08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      background: radial-gradient(ellipse at top, var(--accent-lime-soft) 0%, var(--bg) 70%);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(118, 75, 162, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(171, 250, 15, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      width: 100%;
+      padding: 64px 48px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--accent-lime-soft);
+      color: var(--accent-lime-dark);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-lime);
+      box-shadow: 0 0 8px rgba(171, 250, 15, 0.6);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.6rem, 7vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    h1 .accent {
+      color: var(--accent-lime-dark);
+    }
+
+    .subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 28px;
+    }
+
+    p.lead {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 56ch;
+      margin: 0 auto 36px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .feature {
+      padding: 18px 16px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      background: var(--bg-soft);
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .feature strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      color: var(--accent-lime-dark);
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 26px;
+      background: var(--text-primary);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .back:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 540px) {
+      .card { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="tag">Coming soon · SaaS</span>
+    <p class="subtitle">$ ./faktotumOS --status</p>
+    <h1>faktotum<span class="accent">OS</span></h1>
+    <p class="lead">Il sistema operativo proprietario per orchestrare i tuoi agenti AI. Multi-device sync, network di agenti, API locali. Attualmente in sviluppo interno.</p>
+
+    <div class="features">
+      <div class="feature"><strong>Sync</strong>Multi-Device</div>
+      <div class="feature"><strong>Network</strong>Multi-Agent</div>
+      <div class="feature"><strong>API</strong>Local-First</div>
+    </div>
+
+    <a class="back" href="index.html">&larr; Torna al sito principale</a>
+  </div>
+</body>
+</html>

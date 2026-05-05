@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=Inter:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F8F9FA; font-family: 'Inter', sans-serif; padding: 20px; }
+  .row { display: flex; gap: 12px; }
+  .grad { flex: 1; border-radius: 12px; height: 90px; display: flex; align-items: flex-end; padding: 12px 14px; }
+  .grad-name  { font-size: 12px; font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+  .grad-value { font-size: 10px; font-family: monospace; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="grad" style="background:linear-gradient(135deg,#667EEA,#764BA2)">
+    <div><div class="grad-name" style="color:#fff">Brand Gradient</div><div class="grad-value" style="color:rgba(255,255,255,0.6)">Blue → Purple</div></div>
+  </div>
+  <div class="grad" style="background:linear-gradient(135deg,#F5FFE0,#E8F5C9);border:1px solid #E5E1EB">
+    <div><div class="grad-name" style="color:#1A0B2E">Lime BG</div><div class="grad-value" style="color:#6B5A7D">Soft lime for sections</div></div>
+  </div>
+  <div class="grad" style="background:linear-gradient(135deg,#ABFA0F,#8CC408)">
+    <div><div class="grad-name" style="color:#1A0B2E">Lime Action</div><div class="grad-value" style="color:rgba(26,11,46,0.6)">Button / CTA</div></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #fff; font-family: 'Inter', sans-serif; padding: 24px 20px; }
+  .row { display: flex; flex-direction: column; gap: 12px; }
+  .item { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid #F0EBF5; padding-bottom: 12px; }
+  .item:last-child { border-bottom: none; }
+  .meta { min-width: 120px; font-size: 10px; color: #6B5A7D; letter-spacing: 0.06em; text-transform: uppercase; flex-shrink: 0; }
+  .body-lg  { font-size: 18px; color: #4A3A5C; line-height: 1.65; }
+  .body     { font-size: 16px; color: #4A3A5C; line-height: 1.65; }
+  .body-sm  { font-size: 14px; color: #6B5A7D; }
+  .label    { font-size: 12px; font-weight: 600; color: #6B5A7D; letter-spacing: 0.08em; text-transform: uppercase; }
+  .caption  { font-size: 12px; color: #6B5A7D; }
+  .code     { font-size: 13px; font-family: monospace; color: #764BA2; background: #F8F9FA; padding: 2px 7px; border-radius: 5px; border: 1px solid #E5E1EB; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="item"><div class="meta">Body LG · 18px</div><div class="body-lg">Transform your workflows with autonomous agents.</div></div>
+  <div class="item"><div class="meta">Body · 16px</div><div class="body">Automate repetitive tasks and focus on what matters most to your business.</div></div>
+  <div class="item"><div class="meta">Body SM · 14px</div><div class="body-sm">Agent updated · 2 minutes ago</div></div>
+  <div class="item"><div class="meta">Label · 12px</div><div class="label">Active agents</div></div>
+  <div class="item"><div class="meta">Caption · 12px</div><div class="caption">Last run: April 26, 2026 at 09:41</div></div>
+  <div class="item"><div class="meta">Code · mono</div><div class="code">faktotum.run("workflow-id")</div></div>
+</div>
+</body>
+</html>

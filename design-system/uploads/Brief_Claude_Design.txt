@@ -1,0 +1,89 @@
+---
+**Brief per Claude – Progetto Brand Kit FAKTOTUM**
+---
+
+## 1. Panoramica del progetto
+- **Nome brand:** FAKTOTUM
+- **Tagline:** “Intelligent Automation”
+- **Missione:** Trasformare i flussi di lavoro automatizzando i compiti ripetitivi con agenti autonomi intelligenti.
+- **Target:** Professionisti, piccole e medie imprese, startup tech (privati & business) che cercano efficienza e automazione.
+- **Tono di voce:** Futuristico ma amichevole, innovativo e affidabile.
+
+## 2. Asset già presenti (placeholder)
+| Cartella | File | Stato |
+|----------|------|-------|
+| `01_LOGO/Vettoriale` | `faktotum.svg` | SVG originale, pronto per esportazione in AI/EPS.
+| `01_LOGO/Raster` | `faktotum-64.png`, `faktotum-128.png`, `faktotum-256.png`, `faktotum-300dpi.jpg` | PNG/JPG vuoti – da rigenerare a partire dall'SVG.
+| `01_LOGO` | `Linee_Guida_Logo.pdf` | PDF placeholder con linee guida testuali (da trasformare in vero documento grafico).
+| `02_COLORI` | `Palette_Codici.pdf` | PDF placeholder con tabella dei CSS‑variables (da stilizzare e includere swatch).
+| `03_FONT` | `Guida_Tipografia.pdf` | PDF placeholder con indicazioni di font (da completare con esempi visivi).
+| `04_TEMPLATE` | README in ciascuna sottocartella | Descrizioni dei template richiesti (social, presentazioni, carta intestata) – mancano i file di design reali.
+| `05_LINEE_GUIDA_COMPLETE` | `FAKTOTUM_Brand_Book.pdf` | PDF placeholder (una pagina vuota) – da popolare con tutti i contenuti sopra.
+
+## 3. Cosa è necessario realizzare
+1. **Versioni logo**
+   - SVG originale → AI & EPS (preservare tutti i livelli).
+   - PNG a 4 dimensioni: 64 × 64 px, 128 × 128 px, 256 × 256 px, 300 dpi × 300 px per stampa.
+   - JPG retina 300 dpi (per uso stampa su carta intestata).
+   - Variante monocromatica (bianco su sfondo scuro) e versione invertita (scura su sfondo chiaro).
+   - Definire **spazio di protezione** (es. “x = altezza bolt icon”) e **dimensione minima** (es. 24 mm di larghezza per stampa).
+
+2. **Palette colori**
+   - Convertire le variabili CSS in una tavolozza visuale con **swatch**, codici HEX/RGBA, e note d'uso (sfondo, testo primario, accenti, bordi, gradienti).
+   - Creare un PDF stilizzato (uso di griglie e campioni di colore) che includa le combinazioni gradiente `--accent-blue` → `--accent-purple`.
+
+3. **Tipografia**
+   - Scaricare e includere i file font (se licenza lo permette) o indicare link a Google Fonts.
+   - Realizzare una guida PDF con:
+     * Gerarchia titoli (H1‑H4) con dimensioni in pt (es. H1 ≈ 48‑80 pt, H2 ≈ 35‑51 pt).
+     * Stili per pulsanti, link, form, e corpo testo.
+     * Esempi di lorem ipsum per visualizzare allineamento, kerning, line‑height.
+
+4. **Template**
+   - **Social Media**: file Figma o Canva per post 1080 × 1080 px e story 1080 × 1920 px. Includere area logo (con margine) e palette accenti.
+   - **Presentazioni**: master slide PPTX/Google Slides. Header con logo, footer con numerazione, slide di copertina con gradienti brand.
+   - **Carta intestata**: layout A4 in .docx o .indd. Header con barra color `--accent‑lime`, logo full‑color, footer con info contatto.
+   - Fornire file editabili e versioni PDF pronte per stampa.
+
+5. **Brand Book completo**
+   - Un PDF di 8‑12 pagine che racchiuda:
+     1. Introduzione al brand, mission & vision.
+     2. Logo (varianti, uso corretto, errori da evitare).
+     3. Palette colori (swatch + gradienti).
+     4. Tipografia (font, gerarchia, esempi).
+     5. Applicazioni: screenshot del sito (header, hero, bottoni), esempi di social post, slide, letterhead.
+     6. Linee guida di accessibilità (contrasto, dimensioni minime).
+   - Utilizzare il layout già definito sul sito (spazi, radius, shadow) per coerenza visuale.
+
+## 4. Specifiche tecniche
+- **Formati richiesti:** AI, EPS, SVG, PNG (trasparente), JPG (CMYK per stampa), PDF (alta risoluzione, 300 dpi per stampa).
+- **Colori colore:** tutti i valori già presenti nelle CSS‑variables; mantenere esatti (e.g. `#abfa0f` per lime, `#1A0B2E` per testo).
+- **Font:**
+  * *Space Grotesk* – weight 500, 600, 700 – per titoli e UI.
+  * *Inter* – weight 400‑700 – per corpo e forme.
+  * Verificare licenza (Google Fonts → uso commerciale consentito).
+- **Logo dimensioni minime:** 24 mm di larghezza per stampa; 64 px per icone web.
+- **Spazio di protezione:** almeno l’altezza del “bolt” (≈ 20 px) su tutti i lati.
+- **Gradienti consigliati:**
+  * `linear-gradient(135deg, var(--accent-blue), var(--accent-purple))`
+  * `linear-gradient(135deg, var(--accent‑lime‑soft), #e8f5c9)` per sfondi leggeri.
+
+## 5. Tempistiche consigliate
+| Fase | Attività | Durata stimata |
+|------|----------|----------------|
+| 1 | Esportare logo in AI/EPS e generare PNG/JPG corretti | 1 giorno |
+| 2 | Progettare palette colori PDF stilizzato | 0.5 giorni |
+| 3 | Realizzare guida tipografica completa | 1 giorno |
+| 4 | Creare template social, presentazione e carta intestata (file editabili) | 2 giorni |
+| 5 | Assemblare il Brand Book finale | 1 giorno |
+| **Totale** | **≈ 5.5 giorni lavorativi** |
+
+## 6. Note operative per Claude
+- Tutti i file di partenza sono già nella cartella `BRAND_KIT_FAKTOTUM` (vedi struttura). Usa i placeholder come riferimento per i nomi e le posizioni.
+- Mantieni la nomenclatura attuale (es. `faktotum‑128.png`, `Palette_Codici.pdf`).
+- Prima di consegnare, verifica la conformità ai **WCAG 2.1 AA** per contrasto colore (testa con strumenti di contrast checker).
+- Una volta completati i file, sovrascrivi i placeholder presenti e aggiorna il file `TODO.md` marcando le voci corrispondenti come `x`.
+- Se riscontri problemi di licenza con i font o necessiti di versioni custom, chiedi al team di sviluppo.
+
+---
+*Fine del brief.*

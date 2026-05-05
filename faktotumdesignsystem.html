@@ -1,0 +1,1144 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAKTOTUM Design System Preview</title>
+  <meta name="description" content="Anteprima visuale del design system FAKTOTUM: logo, colori, tipografia, componenti, motion e pattern di interfaccia.">
+  <link rel="icon" type="image/svg+xml" href="design-system/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design-system/colors_and_type.css">
+
+  <style>
+    :root {
+      --page-max: 1180px;
+      --nav-width: 280px;
+      --ease: 180ms ease-out;
+      --ink-dark: #0D0618;
+      --mesh-line: rgba(240, 234, 250, 0.08);
+      --surface: #FFFFFF;
+      --surface-soft: #F8F9FA;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .typing-cursor { display: none !important; }
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg-soft);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+
+    a { color: inherit; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--nav-width) minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 26px 20px;
+      border-right: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      z-index: 10;
+    }
+
+    .brand-link {
+      display: block;
+      width: 198px;
+      height: 54px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(229, 225, 235, 0.82);
+      border-radius: 14px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .nav-label {
+      margin: 0 0 10px;
+      color: var(--text-light);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .side-nav {
+      display: grid;
+      gap: 5px;
+      margin-bottom: 26px;
+    }
+
+    .side-nav a {
+      padding: 9px 11px;
+      border-radius: 10px;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      font-weight: 650;
+      text-decoration: none;
+      transition: background var(--ease), color var(--ease), transform var(--ease);
+    }
+
+    .side-nav a:hover {
+      background: var(--bg-purple-tint);
+      color: var(--accent-purple);
+      transform: translateX(2px);
+    }
+
+    .side-note {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface-soft);
+      color: var(--text-secondary);
+      font-size: 0.86rem;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      padding: 56px;
+      overflow: hidden;
+      background:
+        linear-gradient(var(--mesh-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--mesh-line) 1px, transparent 1px),
+        linear-gradient(135deg, #0D0618 0%, #1A0B2E 56%, #231242 100%);
+      background-size: 42px 42px, 42px 42px, auto;
+      color: #F0EAFA;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(13, 6, 24, 0.10), rgba(13, 6, 24, 0.72)),
+        linear-gradient(90deg, rgba(13, 6, 24, 0.68), transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(980px, 100%);
+    }
+
+    .hero-logo {
+      width: 224px;
+      margin-bottom: 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: rgba(240, 234, 250, 0.78);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent-lime);
+      box-shadow: 0 0 0 5px rgba(171, 250, 15, 0.14), 0 0 24px rgba(171, 250, 15, 0.52);
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 940px;
+      color: #F0EAFA;
+      font-size: clamp(3.6rem, 8vw, 7.5rem);
+      line-height: 0.98;
+    }
+
+    .hero-typed {
+      display: block;
+      min-height: 1.06em;
+      color: var(--accent-lime);
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 0.07em;
+      height: 0.82em;
+      margin-left: 0.08em;
+      transform: translateY(0.08em);
+      border-radius: 999px;
+      background: var(--accent-lime);
+      animation: blink 850ms steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 52% { opacity: 1; }
+      53%, 100% { opacity: 0; }
+    }
+
+    .hero-copy {
+      max-width: 710px;
+      margin: 26px 0 0;
+      color: rgba(240, 234, 250, 0.72);
+      font-size: clamp(1.08rem, 1.55vw, 1.28rem);
+    }
+
+    .hero-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .hero-pill {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(240, 234, 250, 0.16);
+      border-radius: var(--radius-full);
+      padding: 7px 12px;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(240, 234, 250, 0.76);
+      font-size: 0.88rem;
+      font-weight: 650;
+      backdrop-filter: blur(12px);
+    }
+
+    .main-section {
+      width: min(var(--page-max), calc(100% - 56px));
+      margin: 0 auto;
+      padding: 78px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(280px, 0.42fr);
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--accent-purple);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2 {
+      color: var(--text-primary);
+      font-size: clamp(2.2rem, 4.7vw, 4.4rem);
+      line-height: 1.04;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .panel {
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+
+    .panel h3 {
+      margin-bottom: 10px;
+      color: var(--text-primary);
+      font-size: 1.28rem;
+      line-height: 1.18;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .logo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+
+    .logo-cell {
+      min-height: 210px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 18px;
+      padding: 24px;
+      border-right: 1px solid var(--border-light);
+    }
+
+    .logo-cell:last-child { border-right: 0; }
+    .logo-cell.dark { background: #1A0B2E; }
+    .logo-cell.gradient { background: var(--gradient-brand); }
+
+    .logo-cell img { width: 220px; }
+    .logo-cell .mark { width: 58px; }
+    .logo-cell span {
+      color: var(--text-light);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .logo-cell.dark span,
+    .logo-cell.gradient span { color: rgba(255, 255, 255, 0.70); }
+
+    .swatch {
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      overflow: hidden;
+    }
+
+    .swatch.dark { color: #F0EAFA; }
+    .swatch strong {
+      display: block;
+      margin-bottom: 3px;
+      font-family: var(--font-display);
+      font-size: 1.02rem;
+    }
+
+    .swatch code {
+      width: fit-content;
+      border: 1px solid rgba(255, 255, 255, 0.40);
+      background: rgba(255, 255, 255, 0.70);
+      color: #1A0B2E;
+    }
+
+    .swatch.dark code {
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(13, 6, 24, 0.48);
+      color: #F0EAFA;
+    }
+
+    .type-sample {
+      display: grid;
+      gap: 18px;
+    }
+
+    .display-sample {
+      margin: 0;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5.8rem);
+      font-weight: 700;
+      line-height: 0.98;
+    }
+
+    .body-sample {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 1.08rem;
+    }
+
+    .label-demo {
+      color: var(--text-light);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .component-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(320px, 0.54fr);
+      gap: 16px;
+    }
+
+    .button-row, .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-demo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 10px 20px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform var(--ease), background var(--ease), border-color var(--ease), color var(--ease);
+    }
+
+    .btn-demo:hover { transform: translateY(-2px); }
+    .btn-primary-demo {
+      background: var(--accent-lime);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-btn-lime);
+    }
+    .btn-brand-demo {
+      background: var(--gradient-brand);
+      color: #fff;
+    }
+    .btn-outline-demo {
+      border-color: var(--border);
+      background: transparent;
+      color: var(--text-primary);
+    }
+    .btn-subtle-demo {
+      border-color: var(--border);
+      border-radius: 10px;
+      background: var(--bg-soft);
+      color: var(--text-secondary);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 29px;
+      padding: 4px 11px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      background: var(--bg-soft);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .badge.active {
+      border-color: rgba(140, 196, 8, 0.30);
+      background: var(--accent-lime-soft);
+      color: var(--accent-lime-text);
+    }
+
+    .badge.running {
+      border-color: rgba(102, 126, 234, 0.25);
+      background: rgba(102, 126, 234, 0.10);
+      color: var(--accent-blue-text);
+    }
+
+    .status-bar-demo {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      width: fit-content;
+      max-width: 100%;
+      min-height: 46px;
+      padding: 10px 19px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      background: var(--surface);
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-card);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .status-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--accent-lime);
+      box-shadow: 0 0 0 5px var(--accent-lime-soft), 0 0 20px var(--accent-lime-glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.16); opacity: 0.72; }
+    }
+
+    .agent-card {
+      position: relative;
+      min-height: 100%;
+      padding: 24px;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
+    }
+
+    .agent-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      background: var(--gradient-brand);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--ease);
+    }
+
+    .agent-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-lime);
+      box-shadow: var(--shadow-card);
+    }
+
+    .agent-card:hover::before { transform: scaleX(1); }
+
+    .agent-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 17px;
+      border-radius: 13px;
+      background: var(--accent-lime-soft);
+      color: var(--accent-lime-text);
+    }
+
+    .agent-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      padding-left: 28px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 9px;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      border-radius: 999px;
+      background: var(--gradient-brand);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -27px;
+      top: 27px;
+      width: 17px;
+      height: 17px;
+      border-radius: 999px;
+      background: var(--accent-lime);
+      box-shadow: 0 0 0 6px var(--accent-lime-soft), 0 0 20px var(--accent-lime-glow);
+    }
+
+    .spec-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .spec {
+      padding: 6px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .form-preview {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      color: var(--text-light);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: var(--surface);
+      color: var(--text-primary);
+      font: inherit;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent-lime);
+      box-shadow: var(--focus-ring);
+    }
+
+    .dark-showcase {
+      padding: 36px;
+      border-radius: 0;
+      background:
+        linear-gradient(var(--mesh-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--mesh-line) 1px, transparent 1px),
+        linear-gradient(135deg, #0D0618, #1A0B2E 58%, #231242);
+      background-size: 36px 36px, 36px 36px, auto;
+    }
+
+    .dark-card {
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 14px;
+      background: rgba(35, 18, 66, 0.82);
+      color: #F0EAFA;
+      backdrop-filter: blur(18px);
+    }
+
+    .dark-card h3 { color: #F0EAFA; }
+    .dark-card p { color: rgba(240, 234, 250, 0.72); }
+
+    .rules-list {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rules-list li {
+      padding: 13px 14px;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      color: var(--text-secondary);
+    }
+
+    .footer {
+      padding: 36px 56px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      width: min(var(--page-max), 100%);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 0 auto;
+    }
+
+    .footer a {
+      color: var(--text-secondary);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .side-nav {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .side-note { display: none; }
+      .hero { min-height: auto; padding: 72px 32px; }
+      .section-head, .component-stage { grid-template-columns: 1fr; }
+      .grid-4, .grid-3, .grid-2, .logo-strip { grid-template-columns: 1fr; }
+      .logo-cell { border-right: 0; border-bottom: 1px solid var(--border-light); }
+      .logo-cell:last-child { border-bottom: 0; }
+    }
+
+    @media (max-width: 640px) {
+      .sidebar { padding: 20px 16px; }
+      .brand-link { width: 164px; height: 46px; }
+      .side-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { padding: 58px 20px; }
+      .hero-logo { width: 190px; margin-bottom: 34px; }
+      h1 { font-size: clamp(3rem, 16vw, 4.6rem); }
+      .main-section { width: min(100% - 28px, var(--page-max)); padding: 58px 0; }
+      .panel, .agent-card, .timeline-item { padding: 20px; }
+      .status-bar-demo { width: 100%; }
+      .footer { padding: 28px 20px; }
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand-link" href="#top" aria-label="Torna all'inizio">
+        <img src="design-system/assets/headerlogo.svg" alt="FAKTOTUM">
+      </a>
+
+      <p class="nav-label">Preview</p>
+      <nav class="side-nav" aria-label="Sezioni design system">
+        <a href="#identity">Identity</a>
+        <a href="#colors">Colors</a>
+        <a href="#type">Type</a>
+        <a href="#components">Components</a>
+        <a href="#patterns">Patterns</a>
+        <a href="#dark">Dark mode</a>
+        <a href="#rules">Rules</a>
+        <a href="index.html">Sito</a>
+      </nav>
+
+      <div class="side-note">
+        Questa anteprima usa asset e token da <strong>Faktotum Design System</strong> e campiona i pattern presenti in <strong>index.html</strong>.
+      </div>
+    </aside>
+
+    <main class="content" id="top">
+      <section class="hero" id="identity">
+        <div class="hero-inner">
+          <img class="hero-logo" src="design-system/assets/logo-white.svg" alt="FAKTOTUM">
+          <span class="eyebrow">Design preview / May 2026</span>
+          <h1>
+            Intelligent Automation
+            <span class="hero-typed"><span id="typedText"></span><span class="typing-cursor" aria-hidden="true"></span></span>
+          </h1>
+          <p class="hero-copy">
+            Una preview visuale per rendere coerenti landing, UI kit, componenti e materiali FAKTOTUM:
+            product light per lavorare, dark electric per i momenti brand.
+          </p>
+          <div class="hero-row" aria-label="Principi del sistema">
+            <span class="hero-pill">Product light</span>
+            <span class="hero-pill">Electric brand mode</span>
+            <span class="hero-pill">Lime as action</span>
+            <span class="hero-pill">Space Grotesk + Inter</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-section">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Brand assets</span>
+            <h2>Logo system pulito, leggibile e pronto per light/dark.</h2>
+          </div>
+          <p>Gli asset validi vivono in `design-system/assets`. La landing attuale va riallineata a questi path, evitando riferimenti root non piu presenti.</p>
+        </div>
+
+        <div class="logo-strip">
+          <div class="logo-cell">
+            <img src="design-system/assets/logo.svg" alt="FAKTOTUM su fondo chiaro">
+            <span>Light</span>
+          </div>
+          <div class="logo-cell dark">
+            <img src="design-system/assets/logo-white.svg" alt="FAKTOTUM su fondo scuro">
+            <span>Dark</span>
+          </div>
+          <div class="logo-cell gradient">
+            <img class="mark" src="design-system/assets/logo-mark.svg" alt="FAKTOTUM mark">
+            <span>Mark</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-section" id="colors">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Color system</span>
+            <h2>Neutrali chiari, viola profondo e lime come segnale.</h2>
+          </div>
+          <p>Il blu pieno resta decorativo o da grafico; per link e testo su bianco usare `--accent-blue-text`.</p>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="swatch" style="background:#FFFFFF"><strong>Background</strong><code>#FFFFFF</code></div>
+          <div class="swatch" style="background:#F8F9FA"><strong>Soft</strong><code>#F8F9FA</code></div>
+          <div class="swatch dark" style="background:#1A0B2E"><strong>Primary text</strong><code>#1A0B2E</code></div>
+          <div class="swatch" style="background:#ABFA0F"><strong>Action lime</strong><code>#ABFA0F</code></div>
+          <div class="swatch" style="background:#F5FFE0"><strong>Lime soft</strong><code>#F5FFE0</code></div>
+          <div class="swatch dark" style="background:#4A5FBF"><strong>Blue text</strong><code>#4A5FBF</code></div>
+          <div class="swatch dark" style="background:#764BA2"><strong>Purple</strong><code>#764BA2</code></div>
+          <div class="swatch dark" style="background:linear-gradient(135deg,#667EEA,#764BA2)"><strong>Brand gradient</strong><code>135deg</code></div>
+        </div>
+      </section>
+
+      <section class="main-section" id="type">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Typography</span>
+            <h2>Display tech, corpo leggibile, UI senza rumore.</h2>
+          </div>
+          <p>Space Grotesk costruisce personalita. Inter regge form, schede, descrizioni e contenuto operativo.</p>
+        </div>
+
+        <div class="panel type-sample">
+          <span class="label-demo">Space Grotesk / Display</span>
+          <p class="display-sample">Automatizza il semplice. Libera il complesso.</p>
+          <p class="body-sample">Inter lavora meglio nei testi lunghi e nei controlli. La UI operativa deve usare tracking neutro, contrasto alto e gerarchie facili da scansionare.</p>
+          <div class="status-bar-demo">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>FAKTOTUM SYSTEM ONLINE | Processing automation tasks</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-section" id="components">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Components</span>
+            <h2>Componenti base ispirati alla landing, ripuliti per il sistema.</h2>
+          </div>
+          <p>Bottoni, badge, card, status e form devono condividere token, focus states e uso coerente del lime.</p>
+        </div>
+
+        <div class="component-stage">
+          <div class="grid">
+            <div class="panel">
+              <h3>Buttons</h3>
+              <div class="button-row">
+                <a class="btn-demo btn-primary-demo" href="#contact-preview">Attiva FAKTOTUM</a>
+                <a class="btn-demo btn-brand-demo" href="#patterns">Brand CTA</a>
+                <a class="btn-demo btn-outline-demo" href="#patterns">Scopri agenti</a>
+                <button class="btn-demo btn-subtle-demo" type="button">Subtle action</button>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h3>Badges</h3>
+              <div class="badge-row">
+                <span class="badge active">Active</span>
+                <span class="badge running">Running</span>
+                <span class="badge">Idle</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Form preview</h3>
+            <form class="form-preview" id="contact-preview">
+              <div class="field">
+                <label for="preview-name">Nome</label>
+                <input id="preview-name" type="text" placeholder="Satoshi Nakamoto">
+              </div>
+              <div class="field">
+                <label for="preview-profile">Profilo</label>
+                <select id="preview-profile">
+                  <option>Business</option>
+                  <option>Privato</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="preview-goal">Obiettivo</label>
+                <textarea id="preview-goal" rows="3" placeholder="Voglio automatizzare report, email e gestione lead."></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-section" id="patterns">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Landing patterns</span>
+            <h2>Pattern reali da `index.html`, trasformati in campioni riusabili.</h2>
+          </div>
+          <p>Le card attuali usano emoji. Nella versione di sistema conviene passare a icone lineari SVG coerenti.</p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="agent-card">
+            <span class="agent-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            </span>
+            <h3>Assistente Email</h3>
+            <p>Analizza le email in arrivo e genera bozze di risposta coerenti con tono e contenuto.</p>
+          </article>
+          <article class="agent-card">
+            <span class="agent-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 4z"/></svg>
+            </span>
+            <h3>Notifiche</h3>
+            <p>Invia alert, promemoria e messaggi attivati da eventi o condizioni operative.</p>
+          </article>
+          <article class="agent-card">
+            <span class="agent-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+            </span>
+            <h3>Copywriter Social</h3>
+            <p>Trasforma contenuti lunghi in post pronti per canali social e newsletter.</p>
+          </article>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:16px;">
+          <div class="panel">
+            <h3>Roadmap timeline</h3>
+            <div class="timeline">
+              <article class="timeline-item">
+                <h3>Alpha Test</h3>
+                <p>Validazione locale, flussi multi-agente e memoria contestuale.</p>
+                <div class="spec-row">
+                  <span class="spec">AMD Ryzen 7</span>
+                  <span class="spec">Local LLM</span>
+                  <span class="spec">OpenClaw</span>
+                </div>
+              </article>
+              <article class="timeline-item">
+                <h3>Beta</h3>
+                <p>Deploy su hardware accessibile e architettura ibrida cloud/edge.</p>
+                <div class="spec-row">
+                  <span class="spec">Raspberry Pi</span>
+                  <span class="spec">Hybrid API</span>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Use case tabs</h3>
+            <div class="button-row" role="tablist" aria-label="Demo tab">
+              <button class="btn-demo btn-primary-demo tab-control active" type="button" data-tab="private">Privati</button>
+              <button class="btn-demo btn-outline-demo tab-control" type="button" data-tab="business">Business</button>
+            </div>
+            <div class="panel" style="margin-top:14px; box-shadow:none;">
+              <p id="tabCopy">Gestione prenotazioni, contenuti, documenti e routine personali con agenti semplici da supervisionare.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-section" id="dark">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Dark brand mode</span>
+            <h2>Da usare per hero, CTA e presentazioni, non per ogni dashboard.</h2>
+          </div>
+          <p>La variante scura mantiene il carattere "control panel" del brand senza sacrificare il prodotto light.</p>
+        </div>
+
+        <div class="dark-showcase">
+          <div class="grid grid-3">
+            <article class="dark-card">
+              <span class="eyebrow">Hero moment</span>
+              <h3>Il tuo prossimo collaboratore</h3>
+              <p>Perfetto per headline, lancio prodotto e sezioni a forte impatto narrativo.</p>
+            </article>
+            <article class="dark-card">
+              <span class="eyebrow">Control panel</span>
+              <h3>Signal over decoration</h3>
+              <p>Lime come stato, progress, azione primaria. Grid e vetro solo quando servono.</p>
+            </article>
+            <article class="dark-card">
+              <span class="eyebrow">Brand deck</span>
+              <h3>Cover & CTA</h3>
+              <p>Ottimo per copertine deck, social preview e call-to-action finali.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-section" id="rules">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Implementation rules</span>
+            <h2>Le regole che tengono insieme sito, kit e prototipi.</h2>
+          </div>
+          <p>Questa pagina puo diventare la checklist prima di ogni nuovo esperimento visuale FAKTOTUM.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="panel">
+            <h3>Da fare</h3>
+            <ul class="rules-list">
+              <li>Importare `design-system/colors_and_type.css` nei prototipi.</li>
+              <li>Usare gli asset da `design-system/assets`.</li>
+              <li>Usare lime per azione e stato, non come decorazione continua.</li>
+              <li>Verificare focus e contrasto su ogni componente interattivo.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>Da evitare</h3>
+            <ul class="rules-list">
+              <li>Non puntare a `headerlogo.svg` in root: il file runtime valido e `assets/brand/headerlogo.svg`.</li>
+              <li>Non usare emoji come icone finali di UI: preferire SVG lineari.</li>
+              <li>Non annidare card dentro card.</li>
+              <li>Non usare `--accent-blue` per testo normale su fondo bianco.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <span>FAKTOTUM Design System Preview / maggio 2026</span>
+          <a href="#top">Torna su</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const typedText = document.getElementById("typedText");
+    const phrases = [
+      "product light.",
+      "electric brand.",
+      "agents ready.",
+      "design that ships."
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function typeLoop() {
+      const phrase = phrases[phraseIndex];
+      typedText.textContent = phrase.slice(0, charIndex);
+
+      if (!deleting && charIndex < phrase.length) {
+        charIndex += 1;
+        setTimeout(typeLoop, 58);
+        return;
+      }
+
+      if (!deleting && charIndex === phrase.length) {
+        deleting = true;
+        setTimeout(typeLoop, 1250);
+        return;
+      }
+
+      if (deleting && charIndex > 0) {
+        charIndex -= 1;
+        setTimeout(typeLoop, 28);
+        return;
+      }
+
+      deleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      setTimeout(typeLoop, 260);
+    }
+
+    if (typedText) typeLoop();
+
+    const tabCopy = document.getElementById("tabCopy");
+    const tabCopyMap = {
+      private: "Gestione prenotazioni, contenuti, documenti e routine personali con agenti semplici da supervisionare.",
+      business: "Lead, report, messaggi, fatture e processi ripetitivi per team piccoli che vogliono automazione controllabile."
+    };
+
+    document.querySelectorAll(".tab-control").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".tab-control").forEach((item) => {
+          item.classList.remove("btn-primary-demo", "active");
+          item.classList.add("btn-outline-demo");
+        });
+
+        button.classList.add("btn-primary-demo", "active");
+        button.classList.remove("btn-outline-demo");
+        tabCopy.textContent = tabCopyMap[button.dataset.tab];
+      });
+    });
+  </script>
+</body>
+</html>

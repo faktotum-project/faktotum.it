@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F8F9FA; font-family: 'Inter', sans-serif; padding: 24px 20px; }
+  .col { display: flex; flex-direction: column; gap: 14px; max-width: 340px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 12px; font-weight: 600; color: #6B5A7D; letter-spacing: 0.06em; text-transform: uppercase; }
+  input { background: #fff; border: 1.5px solid #E5E1EB; border-radius: 10px; padding: 10px 14px; font-family: 'Inter', sans-serif; font-size: 14px; color: #1A0B2E; outline: none; transition: border-color 150ms, box-shadow 150ms; }
+  input::placeholder { color: #6B5A7D; opacity: 0.6; }
+  .focused { border-color: #ABFA0F; box-shadow: 0 0 0 3px rgba(171,250,15,0.2); }
+  .errored { border-color: rgba(229,62,62,0.6); box-shadow: 0 0 0 3px rgba(229,62,62,0.1); }
+  .error-msg { font-size: 12px; color: #E53E3E; }
+</style>
+</head>
+<body>
+<div class="col">
+  <div class="field">
+    <label>Agent Name</label>
+    <input type="text" value="Invoice Processor">
+  </div>
+  <div class="field">
+    <label>Trigger</label>
+    <input type="text" placeholder="Select trigger…" class="focused">
+  </div>
+  <div class="field">
+    <label>Webhook URL</label>
+    <input type="text" placeholder="https://…" class="errored">
+    <div class="error-msg">Please enter a valid URL</div>
+  </div>
+</div>
+</body>
+</html>

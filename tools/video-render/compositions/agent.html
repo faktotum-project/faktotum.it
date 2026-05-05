@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>FAKTOTUM Momentum — Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f8f9fa;
+      --text-primary: #1a0b2e;
+      --text-secondary: #4a3a5c;
+      --text-muted: #6b5b7d;
+      --border: #e5e1eb;
+      --accent-lime: #abfa0f;
+      --accent-lime-soft: #f5ffe0;
+      --accent-lime-dark: #8cc408;
+      --accent-purple: #764ba2;
+      --accent-blue: #667eea;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --agent-color: #FF6B35;
+      --agent-color-soft: #FFE8DF;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1280px; height: 720px; overflow: hidden; }
+    body {
+      background: radial-gradient(ellipse at 20% 20%, var(--agent-color-soft) 0%, var(--bg) 55%);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    /* Bolt FAKTOTUM watermark (top-right) */
+    .watermark {
+      position: absolute; top: 32px; right: 36px;
+      display: flex; align-items: center; gap: 8px;
+      opacity: 0;
+      font-family: var(--font-heading); font-weight: 700; font-size: 14px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .watermark svg { width: 22px; height: auto; }
+    /* Stage card */
+    .stage {
+      width: 1120px;
+      height: 560px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 56px 72px;
+      box-shadow: 0 30px 80px rgba(26,11,46,0.08), 0 0 0 1px rgba(26,11,46,0.02);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .stage::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--agent-color), var(--accent-lime));
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .stage-top {
+      display: flex; align-items: flex-start; gap: 32px;
+    }
+    .badge-number {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: var(--agent-color-soft);
+      color: var(--agent-color);
+      font-family: var(--font-mono); font-weight: 600; font-size: 13px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      opacity: 0; transform: translateY(-10px);
+    }
+    .agent-icon {
+      width: 100px; height: 100px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, var(--agent-color), color-mix(in srgb, var(--agent-color) 60%, #000));
+      display: grid; place-items: center;
+      font-size: 52px;
+      box-shadow: 0 18px 40px color-mix(in srgb, var(--agent-color) 35%, transparent);
+      flex-shrink: 0;
+      opacity: 0; transform: scale(0.4) rotate(-20deg);
+    }
+    .title-wrap { flex: 1; padding-top: 6px; }
+    h1 {
+      font-family: var(--font-heading);
+      font-size: 72px;
+      font-weight: 700;
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      opacity: 0; transform: translateY(18px);
+    }
+    .tagline {
+      font-size: 24px; line-height: 1.4;
+      color: var(--text-secondary);
+      font-weight: 500;
+      max-width: 720px;
+      opacity: 0; transform: translateY(18px);
+    }
+    .tagline em { color: var(--agent-color); font-style: normal; font-weight: 600; }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .feature {
+      padding: 22px 24px;
+      border-radius: 18px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; gap: 14px;
+      opacity: 0; transform: translateY(20px);
+    }
+    .feature-ico {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: #fff; border: 1px solid var(--border);
+      display: grid; place-items: center;
+      font-size: 22px;
+      color: var(--agent-color);
+    }
+    .feature-text {
+      font-family: var(--font-heading);
+      font-size: 15px; font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+    .stage-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px; border-top: 1px dashed var(--border);
+      margin-top: 24px;
+    }
+    .cta-pill {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      background: var(--accent-lime);
+      color: var(--text-primary);
+      font-family: var(--font-heading); font-weight: 700; font-size: 16px;
+      box-shadow: 0 10px 30px rgba(171, 250, 15, 0.35);
+      opacity: 0; transform: translateY(10px);
+    }
+    .cta-pill svg { width: 20px; height: 20px; }
+    .meta {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      opacity: 0;
+    }
+    /* Decorative floating particles */
+    .particles { position: absolute; inset: 0; pointer-events: none; }
+    .p {
+      position: absolute;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--agent-color);
+      opacity: 0;
+    }
+    /* Render signal */
+    body.ready .stage-top,
+    body.ready .stage-bottom { visibility: visible; }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="watermark" id="watermark">
+    <svg viewBox="0 14 56 28" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#abfa0f" d="M 2.9872 38.4685 C 3.5717 38.4685 4.1778 38.3170 4.8056 37.9706 L 17.5339 30.6107 L 36.1717 40.5899 C 37.0159 41.0228 37.7736 41.2826 38.4663 41.2826 C 39.4836 41.2826 40.3497 40.8064 41.2585 39.7240 L 55.2641 22.0170 C 55.7619 21.3676 56 20.6965 56 20.0688 C 56 18.5751 54.7662 17.2980 53.0993 17.2980 C 52.5150 17.2980 51.8655 17.4495 51.2161 17.8392 L 38.4663 25.1990 L 19.8284 15.2199 C 18.9842 14.7437 18.2049 14.5272 17.5122 14.5272 C 16.5165 14.5272 15.6289 14.9818 14.7631 16.0858 L .7576 33.7928 C .2165 34.4422 0 35.1133 0 35.7410 C 0 37.2563 1.3421 38.4685 2.9872 38.4685 Z M 4.3077 34.9184 C 4.0479 35.0699 3.8531 34.8318 4.0263 34.6370 L 17.2741 18.4452 C 17.5772 18.0556 17.8802 18.0123 18.2699 18.2288 L 37.6870 28.5976 C 38.5962 29.0738 38.8775 28.9656 39.5919 28.4894 L 51.7574 20.8913 C 51.9520 20.7614 52.1688 20.9779 51.9954 21.1728 L 38.7477 37.3645 C 38.4446 37.7325 38.1416 37.7975 37.7519 37.5810 L 18.3131 27.2122 C 17.4256 26.7360 17.1442 26.8442 16.4083 27.2988 Z"/>
+    </svg>
+    <span>FAKTOTUM · Momentum</span>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="stage-top">
+      <div class="agent-icon" id="icon"></div>
+      <div class="title-wrap">
+        <span class="badge-number" id="badge"></span>
+        <h1 id="title"></h1>
+        <p class="tagline" id="tagline"></p>
+      </div>
+    </div>
+    <div class="features" id="features"></div>
+    <div class="stage-bottom">
+      <div class="cta-pill" id="cta">
+        <span>Scopri su GitHub</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+      <div class="meta" id="meta"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+    // Agent registry — keyed by URL query (?a=openclaw)
+    const REGISTRY = {
+      openclaw: {
+        n: '01', name: 'OpenClaw', icon: '🦞',
+        color: '#FF6B35', colorSoft: '#FFE8DF',
+        tagline: 'L\'assistente personale che vive nei <em>canali che usi ogni giorno</em>.',
+        features: [
+          { ico: '💬', text: 'WhatsApp · Telegram · Slack' },
+          { ico: '⚙️', text: 'Tool + Skill integrati' },
+          { ico: '🛰️', text: 'Daemon sempre attivo' }
+        ],
+        meta: 'github.com/openclaw/openclaw'
+      },
+      hermes: {
+        n: '02', name: 'Hermes Agent', icon: '🧠',
+        color: '#F59E0B', colorSoft: '#FEF3C7',
+        tagline: 'L\'agente che <em>cresce con te</em>: memoria persistente e skill auto-generate.',
+        features: [
+          { ico: '🧠', text: 'Memoria persistente' },
+          { ico: '✨', text: 'Skill auto-generate' },
+          { ico: '🌐', text: 'Gateway multi-piattaforma' }
+        ],
+        meta: 'github.com/NousResearch/hermes-agent'
+      },
+      kilo: {
+        n: '03', name: 'Kilo Code', icon: '⌨️',
+        color: '#3B82F6', colorSoft: '#DBEAFE',
+        tagline: 'Il coding agent <em>open source</em> per VS Code, JetBrains e CLI.',
+        features: [
+          { ico: '📝', text: 'Architect · Coder · Debug' },
+          { ico: '🔌', text: 'VS Code + JetBrains' },
+          { ico: '👥', text: '2.3M+ utenti attivi' }
+        ],
+        meta: 'github.com/Kilo-Org/kilocode'
+      },
+      nanoclaw: {
+        n: '04', name: 'NanoClaw', icon: '🛡️',
+        color: '#10B981', colorSoft: '#D1FAE5',
+        tagline: 'Personale. <em>Sicuro.</em> Leggero. Agenti in container isolati.',
+        features: [
+          { ico: '📦', text: 'Container isolati' },
+          { ico: '🔐', text: 'Agent Vault' },
+          { ico: '🎛️', text: 'Skill on-demand' }
+        ],
+        meta: 'github.com/qwibitai/nanoclaw'
+      },
+      nemoclaw: {
+        n: '05', name: 'NemoClaw', icon: '🛰️',
+        color: '#76B900', colorSoft: '#E8F5C9',
+        tagline: 'OpenClaw in <em>sandbox NVIDIA</em>: policy, isolamento, lifecycle.',
+        features: [
+          { ico: '🏗️', text: 'OpenShell runtime' },
+          { ico: '🛡️', text: 'Policy + Sandbox' },
+          { ico: '⚡', text: 'NVIDIA Agent Toolkit' }
+        ],
+        meta: 'github.com/NVIDIA/NemoClaw'
+      }
+    };
+
+    const params = new URLSearchParams(location.search);
+    const key = params.get('a') || 'openclaw';
+    const data = REGISTRY[key] || REGISTRY.openclaw;
+
+    // Populate
+    document.documentElement.style.setProperty('--agent-color', data.color);
+    document.documentElement.style.setProperty('--agent-color-soft', data.colorSoft);
+    document.getElementById('badge').textContent = `${data.n} · Momentum Agent`;
+    document.getElementById('icon').textContent = data.icon;
+    document.getElementById('title').textContent = data.name;
+    document.getElementById('tagline').innerHTML = data.tagline;
+    document.getElementById('meta').textContent = data.meta;
+
+    const featEl = document.getElementById('features');
+    data.features.forEach(f => {
+      const d = document.createElement('div');
+      d.className = 'feature';
+      d.innerHTML = `<div class="feature-ico">${f.ico}</div><div class="feature-text">${f.text}</div>`;
+      featEl.appendChild(d);
+    });
+
+    // Particles
+    const particlesEl = document.getElementById('particles');
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'p';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.width = (4 + Math.random() * 6) + 'px';
+      p.style.height = p.style.width;
+      particlesEl.appendChild(p);
+    }
+
+    // Animate timeline — 10s total, runs once, designed to look good at every frame
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    tl
+      // 0.0s — background border draw
+      .to('.stage::before', { duration: 0 })
+      .to('#stage', { '--_bx': 1, duration: 0 })
+      // 0.2s — top gradient bar
+      .to('#stage', { duration: 0.8, onStart: () => { document.querySelector('#stage').style.setProperty('--bar', '1'); } }, 0.2)
+      // 0.3s — badge
+      .to('#badge', { opacity: 1, y: 0, duration: 0.6 }, 0.3)
+      // 0.5s — icon pop
+      .to('#icon', { opacity: 1, scale: 1, rotate: 0, duration: 0.9, ease: 'back.out(1.6)' }, 0.5)
+      // 0.8s — title
+      .to('#title', { opacity: 1, y: 0, duration: 0.7 }, 0.8)
+      // 1.2s — tagline
+      .to('#tagline', { opacity: 1, y: 0, duration: 0.7 }, 1.2)
+      // 1.9s — features stagger
+      .to('.feature', { opacity: 1, y: 0, duration: 0.6, stagger: 0.18 }, 1.9)
+      // 3.2s — CTA + meta
+      .to('#cta', { opacity: 1, y: 0, duration: 0.6 }, 3.2)
+      .to('#meta', { opacity: 1, duration: 0.6 }, 3.2)
+      // 3.5s — watermark
+      .to('#watermark', { opacity: 0.55, duration: 0.8 }, 3.5)
+      // Particles (loop-ish but for short clip we just drift)
+      .to('.p', {
+        opacity: 0.6,
+        y: '-=60',
+        x: '+=20',
+        duration: 6,
+        stagger: { each: 0.15, from: 'random' },
+        ease: 'sine.inOut'
+      }, 1.5)
+      // Gentle breathing on icon
+      .to('#icon', { scale: 1.04, duration: 2.2, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 1.8)
+      // Hold final state until 9.5s
+      .to({}, { duration: 0.1 }, 9.5);
+
+    // For headless rendering
+    window.__ready = true;
+    document.body.classList.add('ready');
+  </script>
+</body>
+</html>

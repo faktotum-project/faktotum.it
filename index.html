@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -18,7 +18,7 @@
   <meta name="twitter:card" content="summary_large_image">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="design-system/assets/favicon.svg">
   
   <!-- Fonts 2026: Space Grotesk (headings) + Inter (corpo) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,6 +63,10 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    :focus-visible {
+      outline: 3px solid var(--accent-lime);
+      outline-offset: 3px;
+    }
     body {
       background: var(--bg);
       color: var(--text-primary);
@@ -74,7 +78,7 @@
     }
 
     /* Typography */
-    h1, h2, h3, h4, h5 { font-family: var(--font-heading); font-weight: 700; letter-spacing: -0.02em; }
+    h1, h2, h3, h4, h5 { font-family: var(--font-heading); font-weight: 700; letter-spacing: 0; }
     h1 { font-size: clamp(3rem, 7vw, 5rem); line-height: 1.02; margin-bottom: 24px; }
     h2 { font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.12; margin-bottom: 16px; }
     h3 { font-size: 1.35rem; margin-bottom: 12px; }
@@ -253,20 +257,28 @@
     }
     
     .hero-title-static { color: var(--text-primary); }
+    .hero-type-nowrap {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      white-space: nowrap;
+      max-width: 100%;
+    }
     .hero-title-typed { 
       color: var(--accent-lime-dark); 
       display: inline-block;
-      min-width: 200px;
+      min-height: 1.1em;
     }
     .typing-cursor {
       display: inline-block; 
-      width: 3px; 
-      height: 1.1em;
+      width: 5px;
+      height: 1em;
       background: var(--accent-lime); 
-      margin-left: 2px;
-      vertical-align: text-bottom; 
+      margin-left: 6px;
+      vertical-align: -0.08em;
       animation: blink 1s step-end infinite;
-      border-radius: 2px;
+      border-radius: 3px;
+      box-shadow: 0 0 18px var(--accent-lime-glow);
     }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
@@ -803,7 +815,7 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
   <!-- Particles background -->
   <div class="particles" id="particles"></div>
 
@@ -812,8 +824,8 @@
 
   <header id="header">
     <div class="container nav">
-      <a href="#" class="logo">
-        <img src="headerlogo.svg" alt="FAKTOTUM" class="logo-mark">
+      <a href="#top" class="logo" aria-label="Torna alla home FAKTOTUM">
+        <img src="assets/brand/headerlogo.svg" alt="FAKTOTUM" class="logo-mark">
       </a>
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
         <span></span>
@@ -837,7 +849,7 @@
       <div class="container fade-up">
         <h1 class="hero-title">
           <span class="hero-title-static">Il tuo prossimo collaboratore<br></span>
-          <span class="hero-title-typed" id="typedText"></span><span class="typing-cursor" id="cursor"></span>
+          <span class="hero-type-nowrap"><span class="hero-title-typed" id="typedText"></span><span class="typing-cursor" id="cursor"></span></span>
         </h1>
         <p>FAKTOTUM trasforma i tuoi flussi di lavoro con agenti autonomi intelligenti. 
            Automatizza il semplice, libera il complesso. Recupera fino a <strong>20 ore settimanali</strong> 
@@ -916,14 +928,30 @@
       </div>
       <div class="grid grid-3 fade-up">
         <div class="card">
-          <div class="card-icon">📈</div>
-          <h3>Classifica in preparazione</h3>
-          <p>Qui compariranno gli agenti più rilevanti del periodo con una lettura rapida dei trend emergenti.</p>
+          <div class="card-icon">🧠</div>
+          <h3>Radar LLM - 5 maggio 2026</h3>
+          <p>Snapshot statico dei modelli leader per Artificial Analysis Intelligence Index. Utile per orientare scelte tra qualità, velocità e costo.</p>
+          <div class="specs-grid" style="margin-top:16px;">
+            <span class="spec-tag">GPT-5.5 xhigh · 60</span>
+            <span class="spec-tag">Claude Opus 4.7 · 57</span>
+            <span class="spec-tag">Gemini 3.1 Pro · 57</span>
+            <span class="spec-tag">GPT-5.4 xhigh · 57</span>
+            <span class="spec-tag">Kimi K2.6 · 54</span>
+          </div>
+          <p class="text-secondary" style="margin-top:14px;font-size:0.9rem;">Fonte: Artificial Analysis. Dati statici aggiornati manualmente.</p>
         </div>
         <div class="card">
-          <div class="card-icon">🧠</div>
-          <h3>Aggiornamenti continui</h3>
-          <p>La sezione è predisposta per integrare dati esterni e mettere in evidenza i nuovi agenti da monitorare.</p>
+          <div class="card-icon">📈</div>
+          <h3>Classifica agenti</h3>
+          <p>Radar curatoriale FAKTOTUM sugli agenti da monitorare: assistenti personali, coding agent, sandbox e runtime più sicuri.</p>
+          <div class="specs-grid" style="margin-top:16px;">
+            <span class="spec-tag">OpenClaw · multi-canale</span>
+            <span class="spec-tag">Hermes · memoria</span>
+            <span class="spec-tag">Kilo Code · coding</span>
+            <span class="spec-tag">NanoClaw · sandbox</span>
+            <span class="spec-tag">NemoClaw · security</span>
+          </div>
+          <p class="text-secondary" style="margin-top:14px;font-size:0.9rem;">Selezione editoriale FAKTOTUM, collegata alla pagina Momentum.</p>
         </div>
         <div class="card">
           <div class="card-icon">📝</div>
@@ -1200,6 +1228,7 @@
     // ===== PARTICLES GENERATION =====
     function createParticles() {
       const container = document.getElementById('particles');
+      if (!container) return;
       const particleCount = 20;
       
       for (let i = 0; i < particleCount; i++) {
@@ -1219,22 +1248,66 @@
     // ===== TYPING ANIMATION FOR HERO TITLE =====
     const typedText = document.getElementById('typedText');
     const cursor = document.getElementById('cursor');
-    const textToType = "non è umano. È più efficiente.";
+    const heroPhrases = [
+      "non è umano. È più efficiente.",
+      "è un Web Designer.",
+      "è un Assistente Coach.",
+      "è un Analista Dati.",
+      "è un Partner Chef.",
+      "è un Semantic Converter.",
+      "è un Green Advisor.",
+      "è un Ghostwriter.",
+      "è un Legal Translator.",
+      "è FAKTOTUM."
+    ];
     const typingSpeed = 50;
+    const deletingSpeed = 36;
     const startDelay = 800;
+    const phrasePause = 1300;
+    const nextPhraseDelay = 250;
+    let phraseIndex = 0;
     let typingComplete = false;
+    let typingTimer = 0;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function typeWriter(index = 0) {
-      if (index < textToType.length) {
-        typedText.textContent += textToType.charAt(index);
-        setTimeout(() => typeWriter(index + 1), typingSpeed);
-      } else {
+    function queueTypeWriter(callback, delay) {
+      window.clearTimeout(typingTimer);
+      typingTimer = window.setTimeout(callback, delay);
+    }
+
+    function typeWriter(index = 0, deleting = false) {
+      if (!typedText || !cursor) return;
+
+      if (reduceMotion) {
+        typedText.textContent = "è FAKTOTUM.";
+        cursor.style.opacity = '0';
         typingComplete = true;
-        setTimeout(() => { 
-          cursor.style.opacity = '0'; 
-          cursor.style.transition = 'opacity 0.5s'; 
-        }, 2000);
+        return;
       }
+
+      const currentPhrase = heroPhrases[phraseIndex];
+      const nextText = currentPhrase.slice(0, index);
+      if (typedText.textContent !== nextText) {
+        typedText.textContent = nextText;
+      }
+
+      if (!deleting && index < currentPhrase.length) {
+        queueTypeWriter(() => typeWriter(index + 1, false), typingSpeed);
+        return;
+      }
+
+      if (!deleting && index === currentPhrase.length) {
+        queueTypeWriter(() => typeWriter(index, true), phrasePause);
+        return;
+      }
+
+      if (deleting && index > 0) {
+        queueTypeWriter(() => typeWriter(index - 1, true), deletingSpeed);
+        return;
+      }
+
+      phraseIndex = (phraseIndex + 1) % heroPhrases.length;
+      queueTypeWriter(() => typeWriter(0, false), nextPhraseDelay);
     }
 
     // Restart typing on intersection
@@ -1242,15 +1315,17 @@
     const heroObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !typingComplete) {
-          setTimeout(() => {
+          typingComplete = true;
+          queueTypeWriter(() => {
+            if (!typedText || !cursor) return;
             typedText.textContent = '';
             cursor.style.opacity = '1';
-            typeWriter();
+            typeWriter(0, false);
           }, startDelay);
         }
       });
     }, { threshold: 0.5 });
-    heroObserver.observe(heroSection);
+    if (heroSection) heroObserver.observe(heroSection);
 
     // ===== SCROLL FADE-UP & SCALE-IN ANIMATION =====
     const fadeObserver = new IntersectionObserver((entries) => {
@@ -1267,6 +1342,7 @@
     // ===== HEADER SCROLL EFFECT =====
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
+      if (!header) return;
       if (window.scrollY > 50) {
         header.classList.add('scrolled');
       } else {
@@ -1278,18 +1354,20 @@
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.getElementById('navLinks');
     
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenuBtn.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking a link
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenuBtn.classList.remove('active');
-        navLinks.classList.remove('active');
+    if (mobileMenuBtn && navLinks) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.classList.toggle('active');
+        navLinks.classList.toggle('active');
       });
-    });
+
+      // Close mobile menu when clicking a link
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenuBtn.classList.remove('active');
+          navLinks.classList.remove('active');
+        });
+      });
+    }
 
     // ===== TABS SWITCH =====
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1297,7 +1375,8 @@
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).classList.add('active');
+        const targetTab = document.getElementById(btn.dataset.tab);
+        if (targetTab) targetTab.classList.add('active');
       });
     });
 
@@ -1305,11 +1384,12 @@
     const contactForm = document.getElementById('contactForm');
     const successMessage = document.getElementById('successMessage');
     
-    contactForm.addEventListener('submit', async (e) => {
+    if (contactForm) contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const btn = e.target.querySelector('button[type="submit"]');
-      const btnText = btn.querySelector('.btn-text');
+      const btnText = btn ? btn.querySelector('.btn-text') : null;
+      if (!btn || !btnText) return;
       const originalText = btnText.textContent;
       
       // Validate required fields
@@ -1348,7 +1428,7 @@
         
         // Show success message
         contactForm.style.display = 'none';
-        successMessage.classList.add('visible');
+        if (successMessage) successMessage.classList.add('visible');
         
         // Reset form (hidden)
         e.target.reset();
@@ -1366,6 +1446,7 @@
     const backToTop = document.getElementById('backToTop');
     
     window.addEventListener('scroll', () => {
+      if (!backToTop) return;
       if (window.scrollY > 500) {
         backToTop.classList.add('visible');
       } else {
@@ -1373,7 +1454,7 @@
       }
     });
 
-    backToTop.addEventListener('click', () => {
+    if (backToTop) backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
@@ -1386,7 +1467,7 @@
         
         const target = document.querySelector(targetId);
         if (target) {
-          const headerHeight = header.offsetHeight;
+          const headerHeight = header ? header.offsetHeight : 0;
           const targetPosition = target.offsetTop - headerHeight;
           
           window.scrollTo({ 
@@ -1401,8 +1482,8 @@
     document.addEventListener('keydown', (e) => {
       // ESC to close mobile menu
       if (e.key === 'Escape') {
-        mobileMenuBtn.classList.remove('active');
-        navLinks.classList.remove('active');
+        if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+        if (navLinks) navLinks.classList.remove('active');
       }
     });
 
